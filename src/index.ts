@@ -1,9 +1,11 @@
 import { Mocker } from "./core/mocker";
 import { MockTemplate } from "./core/mockTemplate";
+import { CarMock, CarMocker } from "./mocks/car";
 import { ContextMock, ContextMocker } from "./mocks/context";
 import { EntityMocker } from "./mocks/entity";
 import { GameMapMock, GameMapMocker } from "./mocks/gameMap";
 import { LoadedObjectMocker } from "./mocks/loadedObject";
+import { ParkMock, ParkMocker } from "./mocks/park";
 import { RideMocker } from "./mocks/ride";
 import { RideObjectMocker } from "./mocks/rideObject";
 import { RideObjectVehicleMock } from "./mocks/rideObjectVehicle";
@@ -23,6 +25,11 @@ export interface Mock
 	<T>(source?: Partial<T>): T;
 
 	/**
+	 * Create a mock of an OpenRCT2 car entity.
+	 */
+	car: MockTemplate<CarMock>;
+
+	/**
 	 * Create a mock of an OpenRCT2 context.
 	 */
 	context: MockTemplate<ContextMock>;
@@ -33,14 +40,19 @@ export interface Mock
 	entity: MockTemplate<Entity>;
 
 	/**
-	 * Create a mock of an OpenRCT2 map.
-	 */
-	gameMap: MockTemplate<GameMapMock>;
-
-	/**
 	 * Create a mock of an OpenRCT2 loaded object.
 	 */
 	loadedObject: MockTemplate<LoadedObject>;
+
+	/**
+	 * Create a mock of an OpenRCT2 map.
+	 */
+	map: MockTemplate<GameMapMock>;
+
+	/**
+	 * Create a mock of an OpenRCT2 park.
+	 */
+	park: MockTemplate<ParkMock>;
 
 	/**
 	 * Create a mock of an OpenRCT2 ride.
@@ -79,10 +91,12 @@ export interface Mock
  */
 const Mock: Mock = Object.assign(Mocker,
 {
+	car: CarMocker,
 	context: ContextMocker,
 	entity: EntityMocker,
-	gameMap: GameMapMocker,
 	loadedObject: LoadedObjectMocker,
+	map: GameMapMocker,
+	park: ParkMocker,
 	ride: RideMocker,
 	rideObject: RideObjectMocker,
 	rideObjectVehicle: RideObjectVehicleMock,
@@ -92,5 +106,5 @@ const Mock: Mock = Object.assign(Mocker,
 });
 
 
-export { ContextMock, GameMapMock, UiMock, WindowMock };
+export { ContextMock, GameMapMock, ParkMock, UiMock, WindowMock };
 export default Mock;

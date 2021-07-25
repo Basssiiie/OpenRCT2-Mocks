@@ -1,7 +1,7 @@
 import { Mocker } from "../core/mocker";
 import { ViewportMocker } from "./viewport";
 import { WindowMock, WindowMocker } from "./window";
-import * as ArrayHelper from '../utilities/array';
+import * as ArrayHelper from "../utilities/array";
 
 
 /**
