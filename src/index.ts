@@ -4,11 +4,14 @@ import { CarMock, CarMocker } from "./mocks/car";
 import { ContextMock, ContextMocker } from "./mocks/context";
 import { EntityMocker } from "./mocks/entity";
 import { GameMapMock, GameMapMocker } from "./mocks/gameMap";
+import { GuestMock, GuestMocker } from "./mocks/guest";
 import { LoadedObjectMocker } from "./mocks/loadedObject";
 import { ParkMock, ParkMocker } from "./mocks/park";
+import { PeepMock, PeepMocker } from "./mocks/peep";
 import { RideMocker } from "./mocks/ride";
 import { RideObjectMocker } from "./mocks/rideObject";
 import { RideObjectVehicleMock } from "./mocks/rideObjectVehicle";
+import { StaffMock, StaffMocker } from "./mocks/staff";
 import { UiMock, UiMocker } from "./mocks/ui";
 import { ViewportMocker } from "./mocks/viewport";
 import { WindowMock, WindowMocker } from "./mocks/window";
@@ -40,6 +43,11 @@ export interface Mock
 	entity: MockTemplate<Entity>;
 
 	/**
+	 * Create a mock of an OpenRCT2 guest.
+	 */
+	guest: MockTemplate<GuestMock>;
+
+	/**
 	 * Create a mock of an OpenRCT2 loaded object.
 	 */
 	loadedObject: MockTemplate<LoadedObject>;
@@ -55,6 +63,11 @@ export interface Mock
 	park: MockTemplate<ParkMock>;
 
 	/**
+	 * Create a mock of an OpenRCT2 peep.
+	 */
+	peep: MockTemplate<PeepMock>;
+
+	/**
 	 * Create a mock of an OpenRCT2 ride.
 	 */
 	ride: MockTemplate<Ride>;
@@ -68,6 +81,11 @@ export interface Mock
 	 * Create a mock of an OpenRCT2 ride object's vehicle.
 	 */
 	rideObjectVehicle: MockTemplate<RideObjectVehicle>;
+
+	/**
+	 * Create a mock of an OpenRCT2 staff.
+	 */
+	staff: MockTemplate<StaffMock>;
 
 	/**
 	 * Create a mock of an OpenRCT2 user interface context.
@@ -94,17 +112,20 @@ const Mock: Mock = Object.assign(Mocker,
 	car: CarMocker,
 	context: ContextMocker,
 	entity: EntityMocker,
+	guest: GuestMocker,
 	loadedObject: LoadedObjectMocker,
 	map: GameMapMocker,
 	park: ParkMocker,
+	peep: PeepMocker,
 	ride: RideMocker,
 	rideObject: RideObjectMocker,
 	rideObjectVehicle: RideObjectVehicleMock,
+	staff: StaffMocker,
 	ui: UiMocker,
 	viewport: ViewportMocker,
 	window: WindowMocker,
 });
 
 
-export { ContextMock, GameMapMock, ParkMock, UiMock, WindowMock };
 export default Mock;
+export type { ContextMock, GameMapMock, GuestMock, ParkMock, PeepMock, StaffMock, UiMock, WindowMock };
