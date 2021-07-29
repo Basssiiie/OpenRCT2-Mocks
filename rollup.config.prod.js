@@ -9,7 +9,7 @@ export default [{
 	output: {
 		file: "./dist/index.min.js",
 		format: "cjs",
-		exports: "default"
+		exports: "named"
 	},
 	plugins: [
 		replace({
@@ -40,7 +40,7 @@ export default [{
 	input: "./src/index.ts",
 	output: {
 		file: "./dist/index.d.ts",
-		format: "es",
+		format: "cjs",
 	},
 	plugins: [
 		typescript({ tsconfig: "./tsconfig.dts.json" }),
