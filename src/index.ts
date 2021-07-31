@@ -59,6 +59,11 @@ export interface Mock
 
 	/**
 	 * Create a mock of an OpenRCT2 park.
+	 *
+	 * Auto-mocks the following members if they are not set on the given template:
+	 *  * `getFlag` and `setFlag` to the `flags` property.
+	 *  * `guests` to `map.getAllEntities` and counts the peeps that are guests.
+	 *    If `map` is not defined, it returns 0.
 	 */
 	park: MockTemplate<ParkMock>;
 

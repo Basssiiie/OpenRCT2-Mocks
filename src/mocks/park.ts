@@ -10,9 +10,13 @@ export interface ParkMock extends Park
 }
 
 
+/**
+ * A mock of an OpenRCT2 loaded object.
+ * @internal
+ */
 export function ParkMocker(template?: Partial<ParkMock>): ParkMock
 {
-	return Mocker<ParkMock>({
+	const mock = Mocker<ParkMock>({
 		getFlag(flag: ParkFlags): boolean
 		{
 			return (this.flags !== undefined && hasFlag(this.flags, flag));
@@ -42,6 +46,18 @@ export function ParkMocker(template?: Partial<ParkMock>): ParkMock
 
 		...template,
 	});
+	if (!("guests" in mock))
+	{
+		// If 'guests' is not set, attempt to calculate from map global.
+		Object.defineProperty(mock, "guests", {
+			configurable: true,
+			enumerable: true,
+			get: () => (global.map)
+				? global.map.getAllEntities("peep").filter(p => p.peepType == "guest").length
+				: 0
+		});
+	}
+	return mock;
 }
 
 
