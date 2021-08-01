@@ -46,12 +46,10 @@ export function ParkMocker(template?: Partial<ParkMock>): ParkMock
 
 		...template,
 	});
-	if (!("guests" in mock))
+	if (!("guests" in mock)) // If 'guests' is not set, attempt to calculate from map global.
 	{
-		// If 'guests' is not set, attempt to calculate from map global.
 		Object.defineProperty(mock, "guests", {
-			configurable: true,
-			enumerable: true,
+			configurable: true, enumerable: true,
 			get: () => (global.map)
 				? global.map.getAllEntities("peep").filter(p => p.peepType == "guest").length
 				: 0

@@ -5,6 +5,23 @@ import Mock from "../../src/index";
 import { ParkMocker } from "../../src/mocks/park";
 
 
+test("All auto-mocked members are overridable", t =>
+{
+	const hits: string[] = [];
+	const mock = ParkMocker({
+		guests: 246,
+		getFlag(flag: ParkFlags) { hits.push(flag); return true; },
+		setFlag(flag: ParkFlags) { hits.push(flag); },
+	});
+
+	t.is(246, mock.guests);
+
+	mock.getFlag("open");
+	mock.setFlag("noMoney", true);
+	t.deepEqual([ "open","noMoney" ], hits);
+});
+
+
 test("Guest count is 0 by default", t =>
 {
 	const mock = ParkMocker();

@@ -4,6 +4,16 @@ import test from "ava";
 import { EntityMocker } from "../../src/mocks/entity";
 
 
+test("All auto-mocked members are overridable", t =>
+{
+	const mock = EntityMocker({
+		id: 556677
+	});
+
+	t.is(556677, mock.id);
+});
+
+
 test("Entity id is set", t =>
 {
 	const mock = EntityMocker();

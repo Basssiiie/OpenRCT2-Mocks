@@ -12,11 +12,19 @@ import { RideMocker } from "./mocks/ride";
 import { RideObjectMocker } from "./mocks/rideObject";
 import { RideObjectVehicleMock } from "./mocks/rideObjectVehicle";
 import { StaffMock, StaffMocker } from "./mocks/staff";
+import { TileMocker } from "./mocks/tile";
+import { TileElementMocker } from "./mocks/tileElement";
 import { UiMock, UiMocker } from "./mocks/ui";
 import { ViewportMocker } from "./mocks/viewport";
 import { WindowMock, WindowMocker } from "./mocks/window";
 
 
+/**
+ * Mock is an easy to use utility to help create mocks for well known OpenRCT2
+ * interfaces. Each mock allows passing in a base template to set specific
+ * values for your unit tests. Mock will also auto-mock certain members in
+ * expectable ways to reduce potential crashes when unit testing your plugin.
+ */
 export interface Mock
 {
 	/**
@@ -57,6 +65,13 @@ export interface Mock
 
 	/**
 	 * Create a mock of an OpenRCT2 map.
+	 *
+	 * Auto-mocks the following members if they are not set on the given template:
+	 *  * `numEntities` maps to the length of the `entities` array.
+	 *  * `numRides` maps to the length of the `rides` array.
+	 *  * `getAllEntities` and `getEntity` query the `entities` array.
+	 *  * `getRide` queries the `rides` array.
+	 *  * `getTile` maps to `tiles`, or queries it if it is an array.
 	 */
 	map: MockTemplate<GameMapMock>;
 
@@ -96,6 +111,19 @@ export interface Mock
 	staff: MockTemplate<StaffMock>;
 
 	/**
+	 * Create a mock of an OpenRCT2 tile.
+	 *
+	 * Auto-mocks the following members if they are not set on the given template:
+	 *  * `getElement`, `insertElement`, `removeElement` and `numElements` map to the `elements` array.
+	 */
+	tile: MockTemplate<Tile>;
+
+	/**
+	 * Create a mock of an OpenRCT2 tile element.
+	 */
+	tileElement: MockTemplate<TileElement>;
+
+	/**
 	 * Create a mock of an OpenRCT2 user interface context.
 	 */
 	ui: MockTemplate<UiMock>;
@@ -129,6 +157,8 @@ const Mock: Mock = Object.assign(Mocker,
 	rideObject: RideObjectMocker,
 	rideObjectVehicle: RideObjectVehicleMock,
 	staff: StaffMocker,
+	tile: TileMocker,
+	tileElement: TileElementMocker,
 	ui: UiMocker,
 	viewport: ViewportMocker,
 	window: WindowMocker,
