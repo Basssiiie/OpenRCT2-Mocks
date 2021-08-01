@@ -9,10 +9,11 @@ import { TileElementMocker } from "./tileElement";
 export function TileMocker(template?: Partial<Tile>): Tile
 {
 	const mock = Mocker({
+		elements: [], // = a default property
 		getElement(index: number)
 		{
-			if (!this.elements || this.elements.length >= index)
-				throw Error(`Unknown element index '${index}'; it is outside of the bounds of the 'elements' list on the 'tile' mock.`);
+			if (!this.elements || index < 0 || index >= this.elements.length)
+				return TileElementMocker();
 
 			return this.elements[index];
 		},

@@ -22,8 +22,15 @@ import { WindowMock, WindowMocker } from "./mocks/window";
 /**
  * Mock is an easy to use utility to help create mocks for well known OpenRCT2
  * interfaces. Each mock allows passing in a base template to set specific
- * values for your unit tests. Mock will also auto-mock certain members in
- * expectable ways to reduce potential crashes when unit testing your plugin.
+ * values for your unit tests.
+ *
+ * Some general notes:
+ *  * Some members will be auto-mocked with basic functionality if not supplied
+ *     through the template.
+ *  * Some templates have additional storage properties to supply specific internal
+ *     objects which are normally only accesible through the interface's methods.
+ *  * Members that return interfaces, will return default mocks if not supplied
+ *     through the template.
  */
 export interface Mock
 {

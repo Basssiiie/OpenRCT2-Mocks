@@ -1,5 +1,8 @@
 import { Mocker } from "../core/mocker";
 import * as ArrayHelper from "../utilities/array";
+import { EntityMocker } from "./entity";
+import { RideMocker } from "./ride";
+import { TileMocker } from "./tile";
 
 
 /**
@@ -20,6 +23,7 @@ export interface GameMapMock extends GameMap
 export function GameMapMocker(template?: Partial<GameMapMock>): GameMapMock
 {
 	const mock = Mocker<GameMapMock>({
+		rides: [], // = a default property.
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		getAllEntities(type: EntityType): any[]
 		{
@@ -31,7 +35,7 @@ export function GameMapMocker(template?: Partial<GameMapMock>): GameMapMock
 		{
 			const result = this.entities?.find(r => r.id === id);
 			if (!result)
-				throw Error(`Unknown entity id '${id}'; it is not present in the 'entities' list on the 'map' mock.`);
+				return EntityMocker();
 
 			return result;
 		},
@@ -39,22 +43,19 @@ export function GameMapMocker(template?: Partial<GameMapMock>): GameMapMock
 		{
 			const result = this.rides?.find(r => r.id === id);
 			if (!result)
-				throw Error(`Unknown ride id '${id}'; it is not present in the 'rides' list on the 'map' mock.`);
+				return RideMocker();
 
 			return result;
 		},
 		getTile(x: number, y: number): Tile
 		{
 			if (!this.tiles)
-				throw Error(`Unknown tile: 'tile' value is not set on 'map'-mock.`);
+				return TileMocker();
 
 			if (Array.isArray(this.tiles))
 			{
 				const tile = ArrayHelper.tryFind(this.tiles, t => t.x === x && t.y === y);
-				if (!tile)
-					throw Error(`Unknown tile at position ('${x}', '${y}'); it is not present in the 'tiles' list on the 'map' mock.`);
-
-				return tile;
+				return (tile) ? tile : TileMocker();
 			}
 			const tile = this.tiles; // set x,y to required x,y if not set on tile.
 			return { x: x, y: y, ...(tile as Partial<Tile>) } as Tile;

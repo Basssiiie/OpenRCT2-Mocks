@@ -89,7 +89,7 @@ test("Get empty array if entities not specified", t =>
 });
 
 
-test("Unknown entity throws error", t =>
+test("Unknown entity returns default mock", t =>
 {
 	const mock = GameMapMocker({
 		entities: [
@@ -97,10 +97,9 @@ test("Unknown entity throws error", t =>
 		]
 	});
 
-	t.throws(() =>
-	{
-		mock.getEntity(5);
-	});
+	const entity = mock.getEntity(5);
+
+	t.truthy(entity);
 });
 
 
@@ -153,6 +152,14 @@ test("Get number of rides from rides list", t =>
 });
 
 
+test("Get rides always returns a valid array.", t =>
+{
+	const mock = GameMapMocker();
+
+	t.deepEqual([], mock.rides);
+});
+
+
 test("Number of rides is zero if rides is not specified", t =>
 {
 	const mock = GameMapMocker();
@@ -169,10 +176,9 @@ test("Unknown ride throws error", t =>
 		]
 	});
 
-	t.throws(() =>
-	{
-		mock.getRide(5);
-	});
+	const ride = mock.getRide(5);
+
+	t.truthy(ride);
 });
 
 
@@ -233,10 +239,9 @@ test("Throw if tile is not in tile array", t =>
 		]
 	});
 
-	t.throws(() =>
-	{
-		mock.getTile(2, 3);
-	});
+	const tile = mock.getTile(2, 3);
+
+	t.truthy(tile);
 });
 
 
@@ -244,8 +249,7 @@ test("Throw if tiles not specified", t =>
 {
 	const mock = GameMapMocker();
 
-	t.throws(() =>
-	{
-		mock.getTile(2, 3);
-	});
+	const tile = mock.getTile(2, 3);
+
+	t.truthy(tile);
 });

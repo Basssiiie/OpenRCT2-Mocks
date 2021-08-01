@@ -90,6 +90,14 @@ test("Remove element at index", t =>
 });
 
 
+test("Get elements always returns a valid array", t =>
+{
+	const mock = TileMocker();
+
+	t.deepEqual([], mock.elements);
+});
+
+
 test("Get number of element", t =>
 {
 	const mock = TileMocker({
