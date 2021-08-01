@@ -39,6 +39,9 @@ export interface Mock
 
 	/**
 	 * Create a mock of an OpenRCT2 entity.
+	 *
+	 * Auto-mocks the following members if they are not set on the given template:
+	 *  * `id` is assigned an unique number.
 	 */
 	entity: MockTemplate<Entity>;
 
