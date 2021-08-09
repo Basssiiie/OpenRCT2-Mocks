@@ -1,4 +1,5 @@
 import { Mocker } from "../core/mocker";
+import { SurfaceElementMocker } from "./surfaceElement";
 import { TileElementMocker } from "./tileElement";
 
 
@@ -9,7 +10,9 @@ import { TileElementMocker } from "./tileElement";
 export function TileMocker(template?: Partial<Tile>): Tile
 {
 	const mock = Mocker({
-		elements: [], // = a default property
+		elements: [ // = a default property
+			SurfaceElementMocker()
+		],
 		getElement(index: number)
 		{
 			if (!this.elements || index < 0 || index >= this.elements.length)

@@ -12,6 +12,7 @@ import { RideMocker } from "./mocks/ride";
 import { RideObjectMocker } from "./mocks/rideObject";
 import { RideObjectVehicleMock } from "./mocks/rideObjectVehicle";
 import { StaffMock, StaffMocker } from "./mocks/staff";
+import { SurfaceElementMocker } from "./mocks/surfaceElement";
 import { TileMocker } from "./mocks/tile";
 import { TileElementMocker } from "./mocks/tileElement";
 import { UiMock, UiMocker } from "./mocks/ui";
@@ -118,10 +119,21 @@ export interface Mock
 	staff: MockTemplate<StaffMock>;
 
 	/**
+	 * Create a mock of an OpenRCT2 surface tile element.
+	 *
+	 * Auto-mocks the following members if they are not set on the given template:
+	 *  * `type` is always set to `surface`.
+	 *  * `hasOwnership` and `hasConstructionRights` map to `ownership`.
+	 *  * All properties returning a `number` are set to 0.
+	 */
+	surface: MockTemplate<SurfaceElement>;
+
+	/**
 	 * Create a mock of an OpenRCT2 tile.
 	 *
 	 * Auto-mocks the following members if they are not set on the given template:
 	 *  * `getElement`, `insertElement`, `removeElement` and `numElements` map to the `elements` array.
+	 *  * `elements` contains a single `surface` tile element mock.
 	 */
 	tile: MockTemplate<Tile>;
 
@@ -164,6 +176,7 @@ const Mock: Mock = Object.assign(Mocker,
 	rideObject: RideObjectMocker,
 	rideObjectVehicle: RideObjectVehicleMock,
 	staff: StaffMocker,
+	surface: SurfaceElementMocker,
 	tile: TileMocker,
 	tileElement: TileElementMocker,
 	ui: UiMocker,
