@@ -1,4 +1,5 @@
 import { Mocker } from "../core/mocker";
+import * as Flags from "../utilities/flags";
 
 
 /**
@@ -6,6 +7,9 @@ import { Mocker } from "../core/mocker";
  */
 export interface ParkMock extends Park
 {
+	/**
+	 * Stores all flags that are enabled for this park.
+	 */
 	flags: ParkFlags[];
 }
 
@@ -19,29 +23,11 @@ export function ParkMocker(template?: Partial<ParkMock>): ParkMock
 	const mock = Mocker<ParkMock>({
 		getFlag(flag: ParkFlags): boolean
 		{
-			return (this.flags !== undefined && hasFlag(this.flags, flag));
+			return Flags.has(this.flags, flag);
 		},
 		setFlag(flag: ParkFlags, value: boolean): void
 		{
-			if (value)
-			{
-				if (!this.flags)
-				{
-					this.flags = [ flag ];
-				}
-				else if (!hasFlag(this.flags, flag))
-				{
-					this.flags.push(flag);
-				}
-			}
-			else if (this.flags)
-			{
-				const idx = this.flags.indexOf(flag);
-				if (idx !== -1)
-				{
-					this.flags.splice(idx, 1);
-				}
-			}
+			this.flags = Flags.set(this.flags, flag, value);
 		},
 
 		...template,
@@ -51,15 +37,9 @@ export function ParkMocker(template?: Partial<ParkMock>): ParkMock
 		Object.defineProperty(mock, "guests", {
 			configurable: true, enumerable: true,
 			get: () => (global.map)
-				? global.map.getAllEntities("peep").filter(p => p.peepType == "guest").length
+				? global.map.getAllEntities("guest").length
 				: 0
 		});
 	}
 	return mock;
-}
-
-
-function hasFlag(flags: ParkFlags[], flag: ParkFlags): boolean
-{
-	return (flags.indexOf(flag) !== -1);
 }

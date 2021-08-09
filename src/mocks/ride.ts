@@ -19,15 +19,21 @@ interface RideMock extends Ride
  */
 export function RideMocker(template?: Partial<RideMock>): RideMock
 {
-	return Mocker<RideMock>({
+	const mock = Mocker<RideMock>({
 		id: (++rideId),
 		classification: "ride",
 		vehicles: [],
-		get object()
-		{
-			return context.getObject("ride", this.objectId ?? -1);
-		},
 
 		...template,
 	});
+	if (!("object" in mock)) // Get 'object' from global context if not set.
+	{
+		Object.defineProperty(mock, "object", {
+			configurable: true, enumerable: true,
+			get: () => (global.context)
+				? global.context.getObject("ride", (typeof mock.objectId !== "number") ? mock.objectId : -1)
+				: 0
+		});
+	}
+	return mock;
 }

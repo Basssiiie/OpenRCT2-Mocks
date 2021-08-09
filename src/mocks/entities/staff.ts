@@ -19,7 +19,8 @@ export function StaffMocker(template?: Partial<StaffMock>): StaffMock
 	const Staff = Mocker<StaffMock>({
 		peepType: "staff",
 
-		...(PeepMocker(template) as Partial<Entity>)
+		...(PeepMocker(template) as Partial<Entity>),
+		type: "staff",
 	});
 	return Staff;
 }

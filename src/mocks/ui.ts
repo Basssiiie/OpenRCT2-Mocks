@@ -9,6 +9,9 @@ import * as ArrayHelper from "../utilities/array";
  */
 export interface UiMock extends Ui
 {
+	/**
+	 * Keeps track of all windows that have been created.
+	 */
 	createdWindows: WindowMock[]
 }
 
@@ -26,13 +29,19 @@ export function UiMocker(template?: Partial<UiMock>): UiMock
 		{
 			const window = WindowMocker(desc);
 			window.isOpen = true;
-			this.createdWindows?.unshift(window);
+			if (this.createdWindows)
+			{
+				this.createdWindows.unshift(window);
+			}
 			return window;
 		},
 		closeWindows(classification: string, id?: number): void
 		{
+			if (!this.createdWindows)
+				return;
+
 			this.createdWindows
-				?.filter(w => w.classificationName === classification
+				.filter(w => w.classificationName === classification
 					&& (id === undefined || id === w.number))
 				.forEach(w =>
 				{

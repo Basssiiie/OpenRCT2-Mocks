@@ -33,17 +33,29 @@ export function CarMocker(template?: Partial<CarMock>): CarMock
 		...(EntityMocker(template) as Partial<Entity>)
 	});
 	// Init car based on object if any is specified
-	if (car.rideObject !== undefined && car.vehicleObject !== undefined)
+	if (global.context && "rideObject" in car && "vehicleObject" in car)
 	{
-		const rideObject = context?.getObject("ride", car.rideObject);
-		const obj = rideObject?.vehicles[car.vehicleObject];
-		if (obj)
-		{
-			car.numSeats = (obj.numSeats) ? obj.numSeats : 0;
-			car.mass = (obj.carMass) ? obj.carMass : 0;
-			car.poweredAcceleration = (obj.poweredAcceleration) ? obj.poweredAcceleration : 0;
-			car.poweredMaxSpeed = (obj.poweredMaxSpeed) ? obj.poweredMaxSpeed : 0;
-		}
+		tryUpdateCarFromObject(car);
 	}
 	return car;
+}
+
+
+/**
+ * Sets the properties of the car according to a specified ride object, if present.
+ */
+function tryUpdateCarFromObject(car: CarMock): void
+{
+	const rideObject = global.context.getObject("ride", car.rideObject);
+	if (!rideObject)
+		return;
+
+	const obj = rideObject.vehicles[car.vehicleObject];
+	if (!obj)
+		return;
+
+	car.numSeats = (obj.numSeats) ? obj.numSeats : 0;
+	car.mass = (obj.carMass) ? obj.carMass : 0;
+	car.poweredAcceleration = (obj.poweredAcceleration) ? obj.poweredAcceleration : 0;
+	car.poweredMaxSpeed = (obj.poweredMaxSpeed) ? obj.poweredMaxSpeed : 0;
 }

@@ -33,7 +33,7 @@ export function GameMapMocker(template?: Partial<GameMapMock>): GameMapMock
 		},
 		getEntity(id: number): Entity
 		{
-			const result = this.entities?.find(r => r.id === id);
+			const result = ArrayHelper.tryFind(this.entities, r => r.id === id);
 			if (!result)
 				return EntityMocker();
 
@@ -41,7 +41,7 @@ export function GameMapMocker(template?: Partial<GameMapMock>): GameMapMock
 		},
 		getRide(id: number): Ride
 		{
-			const result = this.rides?.find(r => r.id === id);
+			const result = ArrayHelper.tryFind(this.rides, r => r.id === id);
 			if (!result)
 				return RideMocker();
 

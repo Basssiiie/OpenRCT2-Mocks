@@ -19,7 +19,8 @@ export function GuestMocker(template?: Partial<GuestMock>): GuestMock
 	const Guest = Mocker<GuestMock>({
 		peepType: "guest",
 
-		...(PeepMocker(template) as Partial<Entity>)
+		...(PeepMocker(template) as Partial<Entity>),
+		type: "guest",
 	});
 	return Guest;
 }

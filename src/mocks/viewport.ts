@@ -8,10 +8,10 @@ import { Mocker } from "../core/mocker";
 export function ViewportMocker(template?: Partial<Viewport>): Viewport
 {
 	return Mocker<Viewport>({
-		bottom: 10,
-		top: 20,
-		left: 30,
-		right: 40,
+		top: 0,
+		bottom: 100,
+		left: 0,
+		right: 100,
 		zoom: 0,
 		rotation: 0,
 		visibilityFlags: 0,
@@ -25,14 +25,17 @@ export function ViewportMocker(template?: Partial<Viewport>): Viewport
 		},
 		moveTo(position: CoordsXY | CoordsXYZ): void
 		{
-			this.left = (position.x - 5);
-			this.right = (position.x + 5);
-			this.bottom = (position.y - 5);
-			this.top = (position.y + 5);
+			this.left = (position.x - 50);
+			this.right = (position.x + 50);
+			this.bottom = (position.y - 50);
+			this.top = (position.y + 50);
 		},
 		scrollTo(position: CoordsXY | CoordsXYZ): void
 		{
-			this.moveTo?.(position);
+			if (this.moveTo)
+			{
+				this.moveTo(position);
+			}
 		},
 
 		...template,

@@ -3,11 +3,18 @@ import * as ArrayHelper from "../utilities/array";
 
 
 /**
- * Mock that adds additional configurations to the game map.
+ * Mock that adds additional configurations to the window.
  */
 export interface WindowMock extends Window
 {
+	/**
+	 * The original classification name, if it was specified for the window description.
+	 */
 	classificationName: string;
+
+	/**
+	 * Whether the window is currently open or not.
+	 */
 	isOpen: boolean;
 
 	onClose?: () => void;
@@ -39,23 +46,6 @@ export function WindowMocker(template?: Partial<Window | WindowDesc>): WindowMoc
 			else if (classType === "number")
 			{
 				classId = classValue as number;
-			}
-		}
-
-		// Give viewports proper functions.
-		if (template.widgets)
-		{
-			for (const widget of (template.widgets as ViewportWidget[]))
-			{
-				const viewport = widget.viewport;
-				if (viewport && !viewport.moveTo)
-				{
-					viewport.moveTo = (pos: CoordsXY | CoordsXYZ): void =>
-					{
-						viewport.left = pos.x;
-						viewport.top = pos.y;
-					};
-				}
 			}
 		}
 	}
