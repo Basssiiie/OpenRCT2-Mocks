@@ -1,6 +1,6 @@
 import { Mocker } from "../core/mocker";
-import { SurfaceElementMocker } from "./surfaceElement";
-import { TileElementMocker } from "./tileElement";
+import { SurfaceElementMocker } from "./elements/surfaceElement";
+import { TileElementMocker } from "./elements/tileElement";
 
 
 /**

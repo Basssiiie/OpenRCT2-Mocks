@@ -1,6 +1,6 @@
 import { Mocker } from "../core/mocker";
 import * as ArrayHelper from "../utilities/array";
-import { EntityMocker } from "./entity";
+import { EntityMocker } from "./entities/entity";
 import { RideMocker } from "./ride";
 import { TileMocker } from "./tile";
 

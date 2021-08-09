@@ -1,4 +1,4 @@
-import { Mocker } from "../core/mocker";
+import { Mocker } from "../../core/mocker";
 import { EntityMocker } from "./entity";
 
 

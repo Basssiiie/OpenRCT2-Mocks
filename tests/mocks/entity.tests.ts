@@ -1,7 +1,7 @@
 /// <reference path="../../lib/openrct2.d.ts" />
 
 import test from "ava";
-import { EntityMocker } from "../../src/mocks/entity";
+import { EntityMocker } from "../../src/mocks/entities/entity";
 
 
 test("All auto-mocked members are overridable", t =>

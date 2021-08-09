@@ -5,7 +5,7 @@ import * as ArrayHelper from "../utilities/array";
 
 
 /**
- * Mock that adds additional configurations to the game map.
+ * Mock that adds additional configurations to the user interface api.
  */
 export interface UiMock extends Ui
 {

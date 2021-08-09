@@ -26,6 +26,16 @@ test("All auto-mocked members are overridable", t =>
 });
 
 
+test("Default tile has surface element only", t =>
+{
+	const mock = TileMocker();
+
+	t.is(1, mock.numElements);
+	t.is(1, mock.elements.length);
+	t.is("surface", mock.elements[0].type);
+});
+
+
 test("Get element at index", t =>
 {
 	const mock = TileMocker({
@@ -60,15 +70,16 @@ test("Insert element at index", t =>
 });
 
 
-test("Insert element without entities array", t =>
+test("Insert element without elements array", t =>
 {
 	const mock = TileMocker();
 
 	const element = mock.insertElement(7);
 
 	t.truthy(element);
-	t.is(1, mock.elements.length);
-	t.is(element, mock.elements[0]);
+	t.is(2, mock.elements.length);
+	t.not(element, mock.elements[0]); // = surface
+	t.is(element, mock.elements[1]);
 });
 
 
@@ -94,7 +105,7 @@ test("Get elements always returns a valid array", t =>
 {
 	const mock = TileMocker();
 
-	t.deepEqual([], mock.elements);
+	t.true(Array.isArray(mock.elements));
 });
 
 

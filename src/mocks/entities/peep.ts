@@ -1,4 +1,4 @@
-import { Mocker } from "../core/mocker";
+import { Mocker } from "../../core/mocker";
 import { EntityMocker } from "./entity";
 
 
@@ -17,11 +17,11 @@ export interface PeepMock extends Peep
  */
 export function PeepMocker(template?: Partial<PeepMock>): PeepMock
 {
-	const Peep = Mocker<PeepMock>({
+	const peep = Mocker<PeepMock>({
 		type: "peep",
 		flags: [],
 
 		...(EntityMocker(template) as Partial<Entity>)
 	});
-	return Peep;
+	return peep;
 }
