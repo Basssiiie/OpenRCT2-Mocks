@@ -1,5 +1,5 @@
-import { Mocker } from "../core/mocker";
-import * as ArrayHelper from "../utilities/array";
+import { Mocker } from "../../core/mocker";
+import * as ArrayHelper from "../../utilities/array";
 
 
 /**

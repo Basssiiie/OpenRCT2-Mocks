@@ -1,5 +1,5 @@
 import { LoadedObjectMocker } from "./loadedObject";
-import { Mocker } from "../core/mocker";
+import { Mocker } from "../../core/mocker";
 import { RideObjectVehicleMock } from "./rideObjectVehicle";
 
 

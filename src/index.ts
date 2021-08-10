@@ -5,19 +5,19 @@ import { ContextMock, ContextMocker } from "./mocks/context";
 import { EntityMocker } from "./mocks/entities/entity";
 import { GameMapMock, GameMapMocker } from "./mocks/gameMap";
 import { GuestMock, GuestMocker } from "./mocks/entities/guest";
-import { LoadedObjectMocker } from "./mocks/loadedObject";
+import { LoadedObjectMocker } from "./mocks/objects/loadedObject";
 import { ParkMock, ParkMocker } from "./mocks/park";
 import { PeepMock } from "./mocks/entities/peep";
 import { RideMocker } from "./mocks/ride";
-import { RideObjectMocker } from "./mocks/rideObject";
-import { RideObjectVehicleMock } from "./mocks/rideObjectVehicle";
+import { RideObjectMocker } from "./mocks/objects/rideObject";
+import { RideObjectVehicleMock } from "./mocks/objects/rideObjectVehicle";
 import { StaffMock, StaffMocker } from "./mocks/entities/staff";
 import { SurfaceElementMocker } from "./mocks/elements/surfaceElement";
 import { TileMocker } from "./mocks/tile";
 import { TileElementMocker } from "./mocks/elements/tileElement";
-import { UiMock, UiMocker } from "./mocks/ui";
-import { ViewportMocker } from "./mocks/viewport";
-import { WindowMock, WindowMocker } from "./mocks/window";
+import { UiMock, UiMocker } from "./mocks/ui/ui";
+import { ViewportMocker } from "./mocks/ui/viewport";
+import { WindowMock, WindowMocker } from "./mocks/ui/window";
 
 
 /**
