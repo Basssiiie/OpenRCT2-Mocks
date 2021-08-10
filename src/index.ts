@@ -90,6 +90,7 @@ export interface Mock
 	 *  * Inherits everything from the {@link Mock.entity|`entity`} mock.
 	 *  * `type` and `peepType` are set to `"guest"`.
 	 *  * `getFlag` and `setFlag` map to the `flags` property.
+	 *  * `isInPark` is set to `true` to reflect the most common scenario.
 	 */
 	guest: MockTemplate<GuestMock>;
 
