@@ -1,20 +1,21 @@
 import { Mocker } from "./core/mocker";
 import { MockTemplate } from "./core/mockTemplate";
-import { CarMock, CarMocker } from "./mocks/entities/car";
 import { ContextMock, ContextMocker } from "./mocks/context";
+import { SurfaceElementMocker } from "./mocks/elements/surfaceElement";
+import { TileElementMocker } from "./mocks/elements/tileElement";
+import { CarMock, CarMocker } from "./mocks/entities/car";
 import { EntityMocker } from "./mocks/entities/entity";
-import { GameMapMock, GameMapMocker } from "./mocks/gameMap";
 import { GuestMock, GuestMocker } from "./mocks/entities/guest";
-import { LoadedObjectMocker } from "./mocks/objects/loadedObject";
-import { ParkMock, ParkMocker } from "./mocks/park";
 import { PeepMock } from "./mocks/entities/peep";
-import { RideMocker } from "./mocks/ride";
+import { StaffMock, StaffMocker } from "./mocks/entities/staff";
+import { GameDateMocker } from "./mocks/gameDate";
+import { GameMapMock, GameMapMocker } from "./mocks/gameMap";
+import { LoadedObjectMocker } from "./mocks/objects/loadedObject";
 import { RideObjectMocker } from "./mocks/objects/rideObject";
 import { RideObjectVehicleMock } from "./mocks/objects/rideObjectVehicle";
-import { StaffMock, StaffMocker } from "./mocks/entities/staff";
-import { SurfaceElementMocker } from "./mocks/elements/surfaceElement";
+import { ParkMock, ParkMocker } from "./mocks/park";
+import { RideMocker } from "./mocks/ride";
 import { TileMocker } from "./mocks/tile";
-import { TileElementMocker } from "./mocks/elements/tileElement";
 import { UiMock, UiMocker } from "./mocks/ui/ui";
 import { ViewportMocker } from "./mocks/ui/viewport";
 import { WindowMock, WindowMocker } from "./mocks/ui/window";
@@ -63,6 +64,16 @@ export interface Mock
 	 *  * `subscribe` and `executeAction` map to the `subscriptions` property.
 	 */
 	context: MockTemplate<ContextMock>;
+
+	/**
+	 * Create a mock of an OpenRCT2 date object.
+	 *
+	 * Auto-mocks the following members if they are not set on the given template:
+	 *  * `ticksElapsed`, `monthsElapsed` and `monthProgress` is set to 0.
+	 *  * `yearsElapsed`, `year` and `month` are calculated from `monthsElapsed`.
+	 *  * `day` is calculated from `monthProgress` and influenced by `month`.
+	 */
+	date: MockTemplate<GameDate>;
 
 	/**
 	 * Create a mock of an OpenRCT2 entity.
@@ -213,6 +224,7 @@ const Mock: Mock = Object.assign(Mocker,
 {
 	car: CarMocker,
 	context: ContextMocker,
+	date: GameDateMocker,
 	entity: EntityMocker,
 	guest: GuestMocker,
 	loadedObject: LoadedObjectMocker,
