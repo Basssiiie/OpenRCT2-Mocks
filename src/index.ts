@@ -91,6 +91,7 @@ export interface Mock
 	 *  * `type` and `peepType` are set to `"guest"`.
 	 *  * `getFlag` and `setFlag` map to the `flags` property.
 	 *  * `isInPark` is set to `true` to reflect the most common scenario.
+	 *  * `isLost` checks if `lostCountdown` is lower than 90 or not.
 	 */
 	guest: MockTemplate<GuestMock>;
 
