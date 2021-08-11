@@ -120,7 +120,7 @@ export interface Mock
 	 *
 	 * Auto-mocks the following members if they are not set on the given template:
 	 *  * `getFlag` and `setFlag` map to the `flags` property.
-	 *  * `guests` maps to the length of `map.getAllEntities("guest")`.
+	 *  * `guests` maps to the total of guests that are in the park from `map.getAllEntities("guest")`.
 	 *    If `map` is not defined, it returns 0.
 	 */
 	park: MockTemplate<ParkMock>;

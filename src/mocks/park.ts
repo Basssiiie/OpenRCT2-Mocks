@@ -37,7 +37,7 @@ export function ParkMocker(template?: Partial<ParkMock>): ParkMock
 		Object.defineProperty(mock, "guests", {
 			configurable: true, enumerable: true,
 			get: () => (global.map)
-				? global.map.getAllEntities("guest").length
+				? global.map.getAllEntities("guest").filter(g => g.isInPark).length
 				: 0
 		});
 	}
