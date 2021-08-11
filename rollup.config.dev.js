@@ -9,7 +9,7 @@ export default [{
 	output: {
 		file: "./dist/index.js",
 		format: "cjs",
-		exports: "named"
+		exports: "default"
 	},
 	plugins: [
 		replace({
