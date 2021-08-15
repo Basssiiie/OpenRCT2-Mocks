@@ -12,7 +12,7 @@ export interface UiMock extends Ui
 	/**
 	 * Keeps track of all windows that have been created.
 	 */
-	createdWindows: WindowMock[]
+	createdWindows: WindowMock[];
 }
 
 

@@ -24,6 +24,7 @@
 		"no-unused-vars": "off",
 		"semi": "off",
 		"@typescript-eslint/explicit-function-return-type": ["warn"],
+		"@typescript-eslint/member-delimiter-style": "warn",
 		"@typescript-eslint/no-inferrable-types": "off",
 		"@typescript-eslint/semi": ["warn"],
 		"@typescript-eslint/triple-slash-reference": "off"
