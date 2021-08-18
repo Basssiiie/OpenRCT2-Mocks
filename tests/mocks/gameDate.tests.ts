@@ -48,7 +48,7 @@ test("Day is calculated from month progress", t =>
 {
 	const mock = GameDateMocker({ monthProgress: 32768 });
 
-	t.is(mock.day, 5); // should be middle of month
+	t.is(mock.day, 15); // should be middle of month
 });
 
 
