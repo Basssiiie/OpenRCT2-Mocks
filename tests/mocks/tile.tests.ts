@@ -16,13 +16,13 @@ test("All auto-mocked members are overridable", t =>
 		removeElement(index: number) { hits.push(index); },
 	});
 
-	t.is(34, mock.numElements);
-	t.is(765, mock.elements[0].baseZ);
+	t.is(mock.numElements, 34);
+	t.is(mock.elements[0].baseZ, 765);
 
 	mock.getElement(1010);
 	mock.insertElement(2020);
 	mock.removeElement(3030);
-	t.deepEqual([ 1010, 2020, 3030 ], hits);
+	t.deepEqual(hits, [ 1010, 2020, 3030 ]);
 });
 
 
@@ -30,9 +30,9 @@ test("Default tile has surface element only", t =>
 {
 	const mock = TileMocker();
 
-	t.is(1, mock.numElements);
-	t.is(1, mock.elements.length);
-	t.is("surface", mock.elements[0].type);
+	t.is(mock.numElements, 1);
+	t.is(mock.elements.length, 1);
+	t.is(mock.elements[0].type, "surface");
 });
 
 
@@ -48,7 +48,7 @@ test("Get element at index", t =>
 
 	const element = mock.getElement(2);
 
-	t.is(3, element.baseZ);
+	t.is(element.baseZ, 3);
 });
 
 
@@ -65,7 +65,7 @@ test("Insert element at index", t =>
 	const element = mock.insertElement(1);
 
 	t.truthy(element);
-	t.is(4, mock.elements.length);
+	t.is(mock.elements.length, 4);
 	t.is(element, mock.elements[1]);
 });
 
@@ -77,7 +77,7 @@ test("Insert element without elements array", t =>
 	const element = mock.insertElement(7);
 
 	t.truthy(element);
-	t.is(2, mock.elements.length);
+	t.is(mock.elements.length, 2);
 	t.not(element, mock.elements[0]); // = surface
 	t.is(element, mock.elements[1]);
 });
@@ -95,9 +95,9 @@ test("Remove element at index", t =>
 
 	mock.removeElement(1);
 
-	t.is(2, mock.elements.length);
-	t.is(1, mock.elements[0].baseZ);
-	t.is(3, mock.elements[1].baseZ);
+	t.is(mock.elements.length, 2);
+	t.is(mock.elements[0].baseZ, 1);
+	t.is(mock.elements[1].baseZ, 3);
 });
 
 
@@ -119,5 +119,5 @@ test("Get number of element", t =>
 		]
 	});
 
-	t.is(3, mock.numElements);
+	t.is(mock.numElements, 3);
 });

@@ -10,7 +10,7 @@ test("All auto-mocked members are overridable", t =>
 		id: 556677
 	});
 
-	t.is(556677, mock.id);
+	t.is(mock.id, 556677);
 });
 
 

@@ -14,7 +14,7 @@ test("All auto-mocked members are overridable", t =>
 		setFlag(flag: ParkFlags) { hits.push(flag); },
 	});
 
-	t.is(246, mock.guests);
+	t.is(mock.guests, 246);
 
 	mock.getFlag("open");
 	mock.setFlag("noMoney", true);
@@ -26,7 +26,7 @@ test("Guest count is 0 by default", t =>
 {
 	const mock = ParkMocker();
 
-	t.is(0, mock.guests);
+	t.is(mock.guests, 0);
 });
 
 
@@ -34,7 +34,7 @@ test("Guest count set overrides default", t =>
 {
 	const mock = ParkMocker({ guests: 12 });
 
-	t.is(12, mock.guests);
+	t.is(mock.guests, 12);
 });
 
 
@@ -46,7 +46,7 @@ test("Guest count counts guests on map when present", t =>
 
 	const mock = ParkMocker();
 
-	t.is(3, mock.guests);
+	t.is(mock.guests, 3);
 });
 
 
@@ -62,7 +62,7 @@ test("Guest count skips guests not in park", t =>
 
 	const mock = ParkMocker();
 
-	t.is(1, mock.guests);
+	t.is(mock.guests, 1);
 });
 
 
@@ -107,7 +107,7 @@ test("Set flag is added only once", t =>
 	mock.setFlag("unlockAllPrices", true);
 
 	t.true(mock.getFlag("unlockAllPrices"));
-	t.is(1, mock.flags.filter(f => f === "unlockAllPrices").length);
+	t.is(mock.flags.filter(f => f === "unlockAllPrices").length, 1);
 });
 
 

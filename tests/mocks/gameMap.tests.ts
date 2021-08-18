@@ -18,15 +18,15 @@ test("All auto-mocked members are overridable", t =>
 		getTile(x: number, y: number) { hits.push(`${x},${y}`); return {} as Tile; }
 	});
 
-	t.is(234, mock.numEntities);
-	t.is(567, mock.numRides);
-	t.is(987, mock.rides[0].id);
+	t.is(mock.numEntities, 234);
+	t.is(mock.numRides, 567);
+	t.is(mock.rides[0].id, 987);
 
 	mock.getAllEntities("balloon");
 	mock.getEntity(1010);
 	mock.getRide(2020);
 	mock.getTile(25, 17);
-	t.deepEqual([ "balloon", 1010, 2020, "25,17" ], hits);
+	t.deepEqual(hits, [ "balloon", 1010, 2020, "25,17" ]);
 });
 
 
@@ -42,9 +42,9 @@ test("Get all entities from entities list", t =>
 
 	const entities = mock.getAllEntities("balloon");
 
-	t.is(2, entities.length);
-	t.is(1, entities[0].id);
-	t.is(3, entities[1].id);
+	t.is(entities.length, 2);
+	t.is(entities[0].id, 1);
+	t.is(entities[1].id, 3);
 });
 
 
@@ -60,7 +60,7 @@ test("Get specific entity from entities list", t =>
 
 	const entity = mock.getEntity(2);
 
-	t.is("duck", entity.type);
+	t.is(entity.type, "duck");
 });
 
 
@@ -74,7 +74,7 @@ test("Get number of entities from entities list", t =>
 		]
 	});
 
-	t.is(3, mock.numEntities);
+	t.is(mock.numEntities, 3);
 });
 
 
@@ -84,8 +84,8 @@ test("Get empty array if entities not specified", t =>
 
 	const entities = mock.getAllEntities("balloon");
 
-	t.deepEqual([], entities);
-	t.is(0, mock.numEntities);
+	t.deepEqual(entities, []);
+	t.is(mock.numEntities, 0);
 });
 
 
@@ -115,10 +115,10 @@ test("Get all rides from rides list", t =>
 
 	const rides = mock.rides;
 
-	t.is(3, rides.length);
-	t.is("a", rides[0].name);
-	t.is("b", rides[1].name);
-	t.is("c", rides[2].name);
+	t.is(rides.length, 3);
+	t.is(rides[0].name, "a");
+	t.is(rides[1].name, "b");
+	t.is(rides[2].name, "c");
 });
 
 
@@ -134,7 +134,7 @@ test("Get specific ride from rides list", t =>
 
 	const ride = mock.getRide(3);
 
-	t.is("c", ride.name);
+	t.is(ride.name, "c");
 });
 
 
@@ -148,7 +148,7 @@ test("Get number of rides from rides list", t =>
 		]
 	});
 
-	t.is(3, mock.numRides);
+	t.is(mock.numRides, 3);
 });
 
 
@@ -164,7 +164,7 @@ test("Number of rides is zero if rides is not specified", t =>
 {
 	const mock = GameMapMocker();
 
-	t.is(0, mock.numRides);
+	t.is(mock.numRides, 0);
 });
 
 
@@ -191,8 +191,8 @@ test("Always get tile from single set tile", t =>
 	const tile = mock.getTile(3, 2);
 
 	t.truthy(tile);
-	t.is(1, tile.x);
-	t.is(5, tile.y);
+	t.is(tile.x, 1);
+	t.is(tile.y, 5);
 });
 
 
@@ -204,9 +204,9 @@ test("Get tile from single set tile with overriden coordinates if not specified"
 
 	const tile = mock.getTile(5, 4);
 
-	t.is(3, tile.numElements);
-	t.is(5, tile.x);
-	t.is(4, tile.y);
+	t.is(tile.numElements, 3);
+	t.is(tile.x, 5);
+	t.is(tile.y, 4);
 });
 
 
@@ -223,8 +223,8 @@ test("Get specific tile from tile array", t =>
 
 	const tile = mock.getTile(2, 1);
 
-	t.is(2, tile.x);
-	t.is(1, tile.y);
+	t.is(tile.x, 2);
+	t.is(tile.y, 1);
 });
 
 
