@@ -29,11 +29,23 @@ export function UiMocker(template?: Partial<UiMock>): UiMock
 		{
 			const window = WindowMocker(desc);
 			window.isOpen = true;
+			polyfillWidgets(window.widgets);
 			if (this.createdWindows)
 			{
 				this.createdWindows.unshift(window);
 			}
 			return window;
+		},
+		closeAllWindows(): void
+		{
+			if (!this.createdWindows)
+				return;
+
+			this.createdWindows.forEach(w =>
+			{
+				w.onClose?.();
+				w.isOpen = false;
+			});
 		},
 		closeWindows(classification: string, id?: number): void
 		{
@@ -60,4 +72,52 @@ export function UiMocker(template?: Partial<UiMock>): UiMock
 
 		...template,
 	});
+}
+
+
+/**
+ * Polyfills functions in widgets that are usually not supplied on widget creation.
+ */
+function polyfillWidgets(widgets: Widget[] | undefined): void
+{
+	if (widgets)
+	{
+		for (let i = 0; i < widgets.length; i++)
+		{
+			const widget = widgets[i];
+			if (widget.type === "viewport")
+			{
+				polyfillViewport(widget as ViewportWidget);
+			}
+		}
+	}
+}
+
+
+// A mock of a viewport to take functions from.
+const viewportMock = ViewportMocker();
+
+
+/**
+ * Polyfills functions on the viewport.
+ */
+function polyfillViewport(widget: ViewportWidget): void
+{
+	if (!widget.viewport)
+	{
+		widget.viewport = {} as Viewport;
+	}
+	const viewport = widget.viewport;
+	if (!viewport.getCentrePosition)
+	{
+		viewport.getCentrePosition = viewportMock.getCentrePosition;
+	}
+	if (!viewport.moveTo)
+	{
+		viewport.moveTo = viewportMock.moveTo;
+	}
+	if (!viewport.scrollTo)
+	{
+		viewport.scrollTo = viewportMock.scrollTo;
+	}
 }

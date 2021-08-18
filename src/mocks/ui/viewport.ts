@@ -15,7 +15,7 @@ export function ViewportMocker(template?: Partial<Viewport>): Viewport
 		zoom: 0,
 		rotation: 0,
 		visibilityFlags: 0,
-		getCentrePosition()
+		getCentrePosition(): CoordsXY
 		{
 			const vw = this as Viewport;
 			return {
