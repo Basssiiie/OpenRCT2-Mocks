@@ -2,7 +2,7 @@
 	"name": "openrct2-mocks",
 	"author": "Basssiiie",
 	"license": "MIT",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Unit test mocks for OpenRCT2 plugins.",
 	"keywords": [
 		"openrct2",
@@ -18,8 +18,8 @@
 	"scripts": {
 		"start": "npm run watch",
 		"watch": "nodemon --watch ./src --ext js,ts",
-		"build": "npm run lint && rollup --config rollup.config.prod.js",
-		"build:dev": "rollup --config rollup.config.dev.js",
+		"build": "npm run lint && rollup --config rollup.config.js --environment BUILD:production",
+		"build:dev": "rollup --config rollup.config.js",
 		"build:all": "npm run build && npm run build:dev",
 		"lint": "eslint ./src --ext .js --ext .ts",
 		"test": "nyc ava",
