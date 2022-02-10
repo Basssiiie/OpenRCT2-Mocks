@@ -11,6 +11,7 @@
 		"mocking"
 	],
 	"main": "dist/index.min.js",
+	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",
 	"files": [
 		"dist/index*"
@@ -20,10 +21,9 @@
 		"watch": "nodemon --watch ./src --ext js,ts",
 		"build": "npm run lint && rollup --config rollup.config.js --environment BUILD:production",
 		"build:dev": "rollup --config rollup.config.js",
-		"build:all": "npm run build && npm run build:dev",
 		"lint": "eslint ./src --ext .js --ext .ts",
 		"test": "nyc ava",
-		"publish:local": "npm run build:all && cd dist && npm pack .. && npm install --global openrct2-mocks-0.1.0.tgz"
+		"publish:local": "npm run build:all && cd dist && npm pack .. && npm install --global openrct2-mocks-0.1.1.tgz"
 	},
 	"repository": {
 		"type": "git",
