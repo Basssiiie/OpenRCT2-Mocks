@@ -2,7 +2,7 @@
 	"name": "openrct2-mocks",
 	"author": "Basssiiie",
 	"license": "MIT",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Unit test mocks for OpenRCT2 plugins.",
 	"keywords": [
 		"openrct2",
@@ -23,7 +23,8 @@
 		"build:dev": "rollup --config rollup.config.js",
 		"lint": "eslint ./src --ext .js --ext .ts",
 		"test": "nyc ava",
-		"publish:local": "npm run build && cd dist && npm pack .. && npm install --global openrct2-mocks-0.1.1.tgz"
+		"publish:local": "npm run build && cd dist && npm pack .. && npm install --global openrct2-mocks-0.1.2.tgz",
+		"publish:npm": "npm run build && npm publish"
 	},
 	"repository": {
 		"type": "git",
