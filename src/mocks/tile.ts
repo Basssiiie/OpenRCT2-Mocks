@@ -4,12 +4,21 @@ import { TileElementMocker } from "./elements/tileElement";
 
 
 /**
+ * Mock that adds additional configurations to the tile.
+ */
+interface TileMock extends Tile
+{
+	elements: TileElement[];
+}
+
+
+/**
  * A mock of an tile.
  * @internal
  */
 export function TileMocker(template?: Partial<Tile>): Tile
 {
-	const mock = Mocker({
+	const mock = Mocker<TileMock>({
 		elements: [ // = a default property
 			SurfaceElementMocker()
 		],
