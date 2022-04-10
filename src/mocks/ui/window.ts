@@ -60,6 +60,14 @@ export function WindowMocker(template?: Partial<Window | WindowDesc>): WindowMoc
 
 			return result as T;
 		},
+        bringToFront(): void
+		{
+			// Do nothing
+		},
+		close(): void
+		{
+			this.isOpen = false;
+		},
 
 		...template,
 		classification: classId,

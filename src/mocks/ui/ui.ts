@@ -82,9 +82,8 @@ function polyfillWidgets(widgets: Widget[] | undefined): void
 {
 	if (widgets)
 	{
-		for (let i = 0; i < widgets.length; i++)
+		for (const widget of widgets)
 		{
-			const widget = widgets[i];
 			if (widget.type === "viewport")
 			{
 				polyfillViewport(widget as ViewportWidget);
