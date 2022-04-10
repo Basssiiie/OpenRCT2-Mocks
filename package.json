@@ -34,7 +34,7 @@
 		"url": "https://github.com/Basssiiie/OpenRCT2-Mocks/issues"
 	},
 	"devDependencies": {
-		"@ava/typescript": "^2.0.0",
+		"@ava/typescript": "^3.0.1",
 		"@rollup/plugin-replace": "^4.0.0",
 		"@rollup/plugin-typescript": "^8.2.5",
 		"@typescript-eslint/eslint-plugin": "^5.11.0",
