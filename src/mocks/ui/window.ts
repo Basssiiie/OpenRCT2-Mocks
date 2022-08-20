@@ -50,6 +50,21 @@ export function WindowMocker(template?: Partial<Window | WindowDesc>): WindowMoc
 		}
 	}
 
+	if ((template as WindowDesc).tabs)
+	{
+		const wd = template as WindowDesc;
+		const tabIndex = wd.tabIndex || 0;
+		// check for widgets in tab
+		if (wd.tabs?.length && wd.tabs[tabIndex])
+		{
+			//safely add the widgets in the tab into wd.widgets[]
+			const tabWidgets = wd.tabs[tabIndex].widgets as Widget[];
+			(wd.widgets && wd.widgets.length > 0) ? wd.widgets.push(...tabWidgets) : wd.widgets = tabWidgets;
+		}
+	}
+
+
+
 	return Mocker<WindowMock>({
 		classificationName: className,
 		findWidget<T extends Widget>(name: string): T
@@ -60,7 +75,7 @@ export function WindowMocker(template?: Partial<Window | WindowDesc>): WindowMoc
 
 			return result as T;
 		},
-        bringToFront(): void
+		bringToFront(): void
 		{
 			// Do nothing
 		},

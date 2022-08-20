@@ -12,7 +12,7 @@ test("All auto-mocked members are overridable", t =>
 		mainViewport: { left: 55 } as Viewport,
 		openWindow(desc: WindowDesc) { hits.push(desc.classification); return {} as Window; },
 		closeWindows(classification: string, id?: number) { hits.push([classification, id]); },
-		getWindow(id: string | number){ hits.push(id); return {} as Window; },
+		getWindow(id: string | number) { hits.push(id); return {} as Window; },
 	});
 
 	t.is(mock.mainViewport.left, 55);
@@ -21,7 +21,7 @@ test("All auto-mocked members are overridable", t =>
 	mock.closeWindows("close", 55);
 	mock.getWindow("get");
 
-	t.deepEqual(hits, [ "open", [ "close", 55 ], "get" ]);
+	t.deepEqual(hits, ["open", ["close", 55], "get"]);
 });
 
 
@@ -157,4 +157,177 @@ test("Get unknown window returns null", t =>
 	const unknown = mock.getWindow("get unknown");
 
 	t.falsy(unknown);
+});
+
+const testDesc: WindowDesc =
+{
+	classification: "test",
+	width: 1,
+	height: 1,
+	title: "Test Desc",
+	widgets: [
+		<TextBoxWidget>{
+			type: "textbox",
+			x: 10,
+			y: 10,
+			width: 180,
+			height: 10,
+			text: "Textbox in widgets",
+		},
+	],
+	tabs: [
+		{
+			image: 0,
+			widgets: [
+				<LabelWidget>{
+					type: "label",
+					x: 20,
+					y: 20,
+					width: 180,
+					height: 10,
+					text: "Label in tab[0]",
+				},
+			]
+		},
+		{
+			image: 1,
+			widgets: [
+				<SpinnerWidget>{
+					type: "spinner",
+					x: 30,
+					y: 30,
+					width: 180,
+					height: 10,
+					text: "Spinner in tab[1]",
+				},
+			]
+		}
+	]
+};
+
+test("Get window returns widgets from windowDesc.tabs", t =>
+{
+	// create a copy of testDesc
+	const tempDesc = JSON.parse(JSON.stringify(testDesc));
+	const mock = UiMocker();
+	const window = mock.openWindow(tempDesc);
+	const widgets = window.widgets;
+	// for this test, make sure that widgets[] from the windowDesc are in
+	t.deepEqual(widgets[0], {
+		type: "textbox",
+		x: 10,
+		y: 10,
+		width: 180,
+		height: 10,
+		text: "Textbox in widgets",
+	});
+});
+
+// for this test, make sure the widgets[] from tab[0] are in when no tabIndex is given
+test("Widgets[] includes 0th tab if no tabIndex given", t =>
+{
+	// create a copy of testDesc
+	const tempDesc = JSON.parse(JSON.stringify(testDesc));
+	const mock = UiMocker();
+	const window = mock.openWindow(tempDesc);
+	const widgets = window.widgets;
+
+	t.deepEqual(widgets[0], {
+		type: "textbox",
+		x: 10,
+		y: 10,
+		width: 180,
+		height: 10,
+		text: "Textbox in widgets",
+	});
+	t.deepEqual(widgets[1], {
+		type: "label",
+		x: 20,
+		y: 20,
+		width: 180,
+		height: 10,
+		text: "Label in tab[0]",
+	});
+	t.deepEqual(widgets[2], undefined);
+});
+
+// for this test, make sure the widgets from tab[1] are in when tabIndex is set to 1
+test("Widgets[] includes proper widgets by tabIndex", t =>
+{
+	// create a copy of testDesc
+	const tempDesc = JSON.parse(JSON.stringify(testDesc));
+	const mock = UiMocker();
+	tempDesc.tabIndex = 1;
+	const window = mock.openWindow(tempDesc);
+	const widgets = window.widgets;
+
+	t.deepEqual(widgets[0], {
+		type: "textbox",
+		x: 10,
+		y: 10,
+		width: 180,
+		height: 10,
+		text: "Textbox in widgets",
+	});
+	t.deepEqual(widgets[1], {
+		type: "spinner",
+		x: 30,
+		y: 30,
+		width: 180,
+		height: 10,
+		text: "Spinner in tab[1]",
+	});
+	t.deepEqual(widgets[2], undefined);
+});
+
+test("Window with no widgets[] populates with widgets from tab", t =>
+{
+	const wd: WindowDesc = {
+		classification: "test",
+		width: 10,
+		height: 10,
+		title: "Test",
+		tabs: [
+			{
+				image: 0,
+				widgets: [
+					<LabelWidget>{
+						type: "label",
+						x: 20,
+						y: 20,
+						width: 180,
+						height: 10,
+						text: "Label in tab[0]",
+					},
+				]
+			},
+			{
+				image: 1,
+				widgets: [
+					<SpinnerWidget>{
+						type: "spinner",
+						x: 30,
+						y: 30,
+						width: 180,
+						height: 10,
+						text: "Spinner in tab[1]",
+					},
+				]
+			}
+		]
+	};
+
+	const mock = UiMocker();
+	const window = mock.openWindow(wd);
+	const widgets = window.widgets;
+
+	t.deepEqual(widgets[0], {
+		type: "label",
+		x: 20,
+		y: 20,
+		width: 180,
+		height: 10,
+		text: "Label in tab[0]",
+	});
+	t.deepEqual(widgets[1], undefined);
 });
