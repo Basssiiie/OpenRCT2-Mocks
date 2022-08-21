@@ -54,7 +54,6 @@ export function WindowMocker(template?: Partial<Window | WindowDesc>): WindowMoc
 	{
 		const wd = template as WindowDesc;
 		const tabIndex = wd.tabIndex || 0;
-
 		// check for widgets in tab
 		if (wd.tabs?.length && wd.tabs[tabIndex])
 		{
