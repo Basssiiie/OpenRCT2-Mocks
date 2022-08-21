@@ -329,5 +329,6 @@ test("Window with no widgets[] populates with widgets from tab", t =>
 		height: 10,
 		text: "Label in tab[0]",
 	});
+
 	t.deepEqual(widgets[1], undefined);
 });
