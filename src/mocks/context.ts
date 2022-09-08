@@ -1,5 +1,6 @@
 import { Mocker } from "../core/mocker";
 import * as ArrayHelper from "../utilities/array";
+import { TrackSegmentMocker } from "./tracks/trackSegment";
 
 
 /**
@@ -75,12 +76,16 @@ export function ContextMocker(template?: Partial<ContextMock>): ContextMock
 				? this.objects.filter(o => o.type === type)
 				: [];
 		},
+		getTrackSegment(type: number): TrackSegment | null
+		{
+			return TrackSegmentMocker({ type });
+		},
 		// eslint-disable-next-line @typescript-eslint/ban-types
 		subscribe(hook: string, callback: Function): IDisposable
 		{
 			const subscription: Subscription =
 			{
-				hook: hook,
+				hook,
 				callback: callback as (e: unknown) => void,
 				isDisposed: false,
 				disposable:
@@ -107,11 +112,7 @@ export function ContextMocker(template?: Partial<ContextMock>): ContextMock
 			{
 				this.subscriptions
 					.filter(s => s.hook === "action.execute" && !s.isDisposed)
-					.forEach(s => s.callback(<GameActionEventArgs>{
-						action: action,
-						args: args,
-						result: result
-					}));
+					.forEach(s => s.callback(<GameActionEventArgs>{ action, args, result }));
 			}
 			callback(result);
 		},

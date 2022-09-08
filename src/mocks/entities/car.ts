@@ -21,13 +21,16 @@ export function CarMocker(template?: Partial<CarMock>): CarMock
 	const car = Mocker<CarMock>({
 		type: "car",
 		peeps: [],
+		remainingDistance: 0,
+		trackLocation: { x: 0, y: 0, z: 0, direction: 0 },
+		trackProgress: 0,
 		poweredAcceleration: 0,
 		poweredMaxSpeed: 0,
 		vehicleObject: 0,
 		travelBy(distance: number): void
 		{
 			this.remainingDistance = ((this.remainingDistance) ? this.remainingDistance : 0) + distance;
-			this.trackProgress = ((this.trackProgress) ? this.trackProgress : 0) + (distance / 9000);
+			this.trackProgress = ((this.trackProgress) ? this.trackProgress : 0) + (distance / 8716);
 		},
 
 		...(EntityMocker(template) as Partial<Entity>)
