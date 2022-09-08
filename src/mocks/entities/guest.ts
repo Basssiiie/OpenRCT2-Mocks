@@ -1,4 +1,5 @@
 import { Mocker } from "../../core/mocker";
+import { tryAddGet } from "../../utilities/object";
 import { PeepMock, PeepMocker } from "./peep";
 
 
@@ -23,12 +24,7 @@ export function GuestMocker(template?: Partial<GuestMock>): GuestMock
 		...(PeepMocker(template) as Partial<Entity>),
 		type: "guest",
 	});
-	if (!("isLost" in mock)) // Calculate from 'monthsElapsed' if not present.
-	{
-		Object.defineProperty(mock, "isLost", {
-			configurable: true, enumerable: true,
-			get: () => (mock.lostCountdown < 90)
-		});
-	}
+	tryAddGet(mock, "isLost", () => (mock.lostCountdown < 90));
+
 	return mock;
 }

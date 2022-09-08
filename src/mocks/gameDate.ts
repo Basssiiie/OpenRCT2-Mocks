@@ -1,4 +1,5 @@
 import { Mocker } from "../core/mocker";
+import { tryAddGet } from "../utilities/object";
 
 
 /**
@@ -14,38 +15,11 @@ export function GameDateMocker(template?: Partial<GameDate>): GameDate
 
 		...template,
 	});
-	if (!("yearsElapsed" in mock)) // Calculate from 'monthsElapsed' if not present.
-	{
-		Object.defineProperty(mock, "yearsElapsed", {
-			configurable: true, enumerable: true,
-			get: () => (mock.monthsElapsed)
-				? Math.floor(mock.monthsElapsed / 8) : 0
-		});
-	}
-	if (!("year" in mock)) // Calculate from 'monthsElapsed' if not present.
-	{
-		Object.defineProperty(mock, "year", {
-			configurable: true, enumerable: true,
-			get: () => (mock.monthsElapsed)
-				? (Math.floor(mock.monthsElapsed / 8) + 1) : 1
-		});
-	}
-	if (!("month" in mock)) // Calculate from 'monthsElapsed' if not present.
-	{
-		Object.defineProperty(mock, "month", {
-			configurable: true, enumerable: true,
-			get: () => (mock.monthsElapsed)
-				? (mock.monthsElapsed % 8) : 0
-		});
-	}
-	if (!("day" in mock)) // Calculate from 'monthProgress' if not present.
-	{
-		Object.defineProperty(mock, "day", {
-			configurable: true, enumerable: true,
-			get: () => (mock.monthProgress)
-				? Math.floor(mock.monthProgress * GetDaysInMonth(mock.month) / 65536) : 1
-		});
-	}
+	tryAddGet(mock, "yearsElapsed", () => (mock.monthsElapsed) ? Math.floor(mock.monthsElapsed / 8) : 0);
+	tryAddGet(mock, "year", () => (mock.monthsElapsed) ? (Math.floor(mock.monthsElapsed / 8) + 1) : 1);
+	tryAddGet(mock, "month", () => (mock.monthsElapsed) ? (mock.monthsElapsed % 8) : 0);
+	tryAddGet(mock, "day", () => (mock.monthProgress) ? Math.floor(mock.monthProgress * GetDaysInMonth(mock.month) / 65536) : 1);
+
 	return mock;
 }
 

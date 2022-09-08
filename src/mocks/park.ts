@@ -1,5 +1,6 @@
 import { Mocker } from "../core/mocker";
 import * as Flags from "../utilities/flags";
+import { tryAddGet } from "../utilities/object";
 
 
 /**
@@ -32,14 +33,10 @@ export function ParkMocker(template?: Partial<ParkMock>): ParkMock
 
 		...template,
 	});
-	if (!("guests" in mock)) // If 'guests' is not set, attempt to calculate from map global.
-	{
-		Object.defineProperty(mock, "guests", {
-			configurable: true, enumerable: true,
-			get: () => (global.map)
-				? global.map.getAllEntities("guest").filter(g => g.isInPark).length
-				: 0
-		});
-	}
+	// If 'guests' is not set, attempt to calculate from map global.
+	tryAddGet(mock, "guests", () => (global.map)
+		? global.map.getAllEntities("guest").filter(g => g.isInPark).length
+		: 0
+	);
 	return mock;
 }

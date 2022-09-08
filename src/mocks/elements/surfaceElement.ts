@@ -1,4 +1,5 @@
 import { Mocker } from "../../core/mocker";
+import { tryAddGet } from "../../utilities/object";
 import { TileElementMocker } from "./tileElement";
 
 
@@ -33,19 +34,8 @@ export function SurfaceElementMocker(template?: Partial<SurfaceElement>): Surfac
 		...(TileElementMocker(template) as Partial<BaseTileElement>),
 		type: "surface",
 	});
-	if (!("hasOwnership" in mock)) // If 'hasOwnership' is not set, get it from 'ownership'.
-	{
-		Object.defineProperty(mock, "hasOwnership", {
-			configurable: true, enumerable: true,
-			get: () => !!(mock.ownership & Ownership.Owned)
-		});
-	}
-	if (!("hasConstructionRights" in mock)) // If 'hasConstructionRights' is not set, get it from 'ownership'.
-	{
-		Object.defineProperty(mock, "hasConstructionRights", {
-			configurable: true, enumerable: true,
-			get: () => !!(mock.ownership & (Ownership.Owned | Ownership.ConstructionRightsOwned))
-		});
-	}
+	tryAddGet(mock, "hasOwnership", () => !!(mock.ownership & Ownership.Owned));
+	tryAddGet(mock, "hasConstructionRights", () => !!(mock.ownership & (Ownership.Owned | Ownership.ConstructionRightsOwned)));
+
 	return mock;
 }

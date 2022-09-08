@@ -1,4 +1,6 @@
 import { Mocker } from "../core/mocker";
+import { tryAddGet } from "../utilities/object";
+import { RideObjectMocker } from "./objects/rideObject";
 
 
 let rideId = 0;
@@ -26,14 +28,15 @@ export function RideMocker(template?: Partial<RideMock>): RideMock
 
 		...template,
 	});
-	if (!("object" in mock)) // Get 'object' from global context if not set.
+	// Get 'object' from global context if not set.
+	tryAddGet(mock, "object", () =>
 	{
-		Object.defineProperty(mock, "object", {
-			configurable: true, enumerable: true,
-			get: () => (global.context)
-				? global.context.getObject("ride", (typeof mock.objectId !== "number") ? mock.objectId : -1)
-				: 0
-		});
-	}
+		if (!global.context)
+		{
+			return RideObjectMocker();
+		}
+		const objId = (typeof mock.objectId !== "number") ? mock.objectId : -1;
+		return global.context.getObject("ride", objId);
+	});
 	return mock;
 }

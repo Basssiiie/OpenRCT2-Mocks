@@ -1,4 +1,5 @@
 import { Mocker } from "../core/mocker";
+import { tryAddGet } from "../utilities/object";
 import { SurfaceElementMocker } from "./elements/surfaceElement";
 import { TileElementMocker } from "./elements/tileElement";
 
@@ -52,12 +53,7 @@ export function TileMocker(template?: Partial<Tile>): Tile
 
 		...template,
 	});
-	if (!("numElements" in mock)) // Calculate from 'elements' list if not set.
-	{
-		Object.defineProperty(mock, "numElements", {
-			configurable: true, enumerable: true,
-			get: () => (mock.elements) ? mock.elements.length : 0
-		});
-	}
+	// Calculate from 'elements' list if not set.
+	tryAddGet(mock, "numElements", () => (mock.elements) ? mock.elements.length : 0);
 	return mock;
 }
