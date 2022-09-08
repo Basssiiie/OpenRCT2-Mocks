@@ -3,6 +3,7 @@ import { MockTemplate } from "./core/mockTemplate";
 import { ContextMock, ContextMocker } from "./mocks/context";
 import { SurfaceElementMocker } from "./mocks/elements/surfaceElement";
 import { TileElementMocker } from "./mocks/elements/tileElement";
+import { TrackElementMocker } from "./mocks/elements/trackElement";
 import { CarMock, CarMocker } from "./mocks/entities/car";
 import { EntityMocker } from "./mocks/entities/entity";
 import { GuestMock, GuestMocker } from "./mocks/entities/guest";
@@ -193,6 +194,11 @@ export interface Mock
 	tileElement: MockTemplate<TileElement>;
 
 	/**
+	 * Create a mock of an OpenRCT2 track element.
+	 */
+	trackElement: MockTemplate<TrackElement>;
+
+	/**
 	 * Create a mock of an OpenRCT2 track iterator.
 	 *  * `segment` and `segmentIndex` map to the `segments` array.
 	 *  * `next` and `previous` increment and decrement `segmentIndex` respectively.
@@ -254,6 +260,7 @@ const Mock: Mock = Object.assign(Mocker,
 	surface: SurfaceElementMocker,
 	tile: TileMocker,
 	tileElement: TileElementMocker,
+	trackElement: TrackElementMocker,
 	trackIterator: TrackIteratorMocker,
 	trackSegment: TrackSegmentMocker,
 	ui: UiMocker,
