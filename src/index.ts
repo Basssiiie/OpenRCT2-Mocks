@@ -16,6 +16,8 @@ import { RideObjectVehicleMock } from "./mocks/objects/rideObjectVehicle";
 import { ParkMock, ParkMocker } from "./mocks/park";
 import { RideMocker } from "./mocks/ride";
 import { TileMocker } from "./mocks/tile";
+import { TrackIteratorMocker } from "./mocks/tracks/trackIterator";
+import { TrackSegmentMocker } from "./mocks/tracks/trackSegment";
 import { UiMock, UiMocker } from "./mocks/ui/ui";
 import { ViewportMocker } from "./mocks/ui/viewport";
 import { WindowMock, WindowMocker } from "./mocks/ui/window";
@@ -112,6 +114,7 @@ export interface Mock
 	 *  * `getEntity` and `getAllEntities` query the `entities` array.
 	 *  * `getRide` queries the `rides` array.
 	 *  * `getTile` maps to `tiles`, or queries it if it is an array.
+	 *  * `getTrackIterator` tries to use the element positional information from `getTile()`.
 	 */
 	map: MockTemplate<GameMapMock>;
 
@@ -190,6 +193,16 @@ export interface Mock
 	tileElement: MockTemplate<TileElement>;
 
 	/**
+	 * Create a mock of an OpenRCT2 track iterator.
+	 */
+	trackIterator: MockTemplate<TrackIterator>;
+
+	/**
+	 * Create a mock of an OpenRCT2 track segment.
+	 */
+	trackSegment: MockTemplate<TrackSegment>;
+
+	/**
 	 * Create a mock of an OpenRCT2 user interface context.
 	 *
 	 * Auto-mocks the following members if they are not set on the given template:
@@ -239,6 +252,8 @@ const Mock: Mock = Object.assign(Mocker,
 	surface: SurfaceElementMocker,
 	tile: TileMocker,
 	tileElement: TileElementMocker,
+	trackIterator: TrackIteratorMocker,
+	trackSegment: TrackSegmentMocker,
 	ui: UiMocker,
 	viewport: ViewportMocker,
 	window: WindowMocker,
