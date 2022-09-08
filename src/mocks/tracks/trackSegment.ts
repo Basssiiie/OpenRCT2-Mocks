@@ -1,13 +1,21 @@
 import { Mocker } from "../../core/mocker";
 
+/**
+ * Mock that adds additional configurations to the track segment.
+ */
+export interface TrackSegmentMock extends TrackSegment
+{
+	subpositions: TrackSubposition[];
+}
+
 
 /**
  * A mock of a track segment.
  * @internal
  */
-export function TrackSegmentMocker(template?: Partial<TrackSegment>): TrackSegment
+export function TrackSegmentMocker(template?: Partial<TrackSegmentMock>): TrackSegmentMock
 {
-	const mock = Mocker<TrackSegment>({
+	const mock = Mocker<TrackSegmentMock>({
 		type: 0,
 		description: "",
 		beginZ: 0,
@@ -23,11 +31,11 @@ export function TrackSegmentMocker(template?: Partial<TrackSegment>): TrackSegme
 		elements: [],
 		getSubpositionLength(): number
 		{
-			return 0;
+			return (this.subpositions) ? this.subpositions.length : 0;
 		},
 		getSubpositions(): TrackSubposition[]
 		{
-			return [];
+			return (this.subpositions) ? this.subpositions : [];
 		},
 
 		...template,

@@ -16,8 +16,8 @@ import { RideObjectVehicleMock } from "./mocks/objects/rideObjectVehicle";
 import { ParkMock, ParkMocker } from "./mocks/park";
 import { RideMocker } from "./mocks/ride";
 import { TileMocker } from "./mocks/tile";
-import { TrackIteratorMocker } from "./mocks/tracks/trackIterator";
-import { TrackSegmentMocker } from "./mocks/tracks/trackSegment";
+import { TrackIteratorMock, TrackIteratorMocker } from "./mocks/tracks/trackIterator";
+import { TrackSegmentMock, TrackSegmentMocker } from "./mocks/tracks/trackSegment";
 import { UiMock, UiMocker } from "./mocks/ui/ui";
 import { ViewportMocker } from "./mocks/ui/viewport";
 import { WindowMock, WindowMocker } from "./mocks/ui/window";
@@ -263,4 +263,4 @@ const Mock: Mock = Object.assign(Mocker,
 
 
 export default Mock;
-export type { ContextMock, GameMapMock, GuestMock, ParkMock, PeepMock, StaffMock, UiMock, WindowMock };
+export type { ContextMock, GameMapMock, GuestMock, ParkMock, PeepMock, StaffMock, TrackIteratorMock, TrackSegmentMock, UiMock, WindowMock };
