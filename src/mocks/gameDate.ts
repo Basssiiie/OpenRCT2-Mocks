@@ -57,7 +57,9 @@ function GetDaysInMonth(month: Month | undefined): number
 {
 	switch (month)
 	{
-		case Month.April, Month.June, Month.September:
+		case Month.April:
+		case Month.June:
+		case Month.September:
 			return 30;
 		default: // all other months + undefined (imply as March)
 			return 31;
