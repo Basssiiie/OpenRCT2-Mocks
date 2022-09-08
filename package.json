@@ -35,12 +35,12 @@
 		"url": "https://github.com/Basssiiie/OpenRCT2-Mocks/issues"
 	},
 	"devDependencies": {
-		"@ava/typescript": "^2.0.0",
+		"@ava/typescript": "^3.0.1",
 		"@rollup/plugin-replace": "^4.0.0",
 		"@rollup/plugin-typescript": "^8.2.5",
 		"@typescript-eslint/eslint-plugin": "^5.11.0",
 		"@typescript-eslint/parser": "^5.11.0",
-		"ava": "^3.15.0",
+		"ava": "^4.3.3",
 		"eslint": "^8.8.0",
 		"eslint-plugin-import": "^2.24.0",
 		"nodemon": "^2.0.12",
