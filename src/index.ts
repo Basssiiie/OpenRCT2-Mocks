@@ -197,12 +197,12 @@ export interface Mock
 	 *  * `segment` and `segmentIndex` map to the `segments` array.
 	 *  * `next` and `previous` increment and decrement `segmentIndex` respectively.
 	 */
-	trackIterator: MockTemplate<TrackIterator>;
+	trackIterator: MockTemplate<TrackIteratorMock>;
 
 	/**
 	 * Create a mock of an OpenRCT2 track segment.
 	 */
-	trackSegment: MockTemplate<TrackSegment>;
+	trackSegment: MockTemplate<TrackSegmentMock>;
 
 	/**
 	 * Create a mock of an OpenRCT2 user interface context.
