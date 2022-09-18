@@ -190,6 +190,10 @@ export interface Mock
 
 	/**
 	 * Create a mock of an OpenRCT2 tile element.
+	 *
+	 * Auto-mocks the following members if they are not set on the given template:
+	 *  * `baseHeight` and `clearanceHeight` will return the value of `baseZ` and `clearanceZ` times 8 respectively, if set.
+	 *  * `baseZ` and `clearanceZ` will return the value of `baseHeight` and `clearanceHeight` integer divided by 8 respectively, if set.
 	 */
 	tileElement: MockTemplate<TileElement>;
 

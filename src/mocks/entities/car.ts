@@ -1,15 +1,13 @@
 import { Mocker } from "../../core/mocker";
+import { Writeable } from "../../utilities/writable";
+import { CoordsMock } from "../coords";
 import { EntityMocker } from "./entity";
 
 
 /**
  * Mock that adds additional configurations to the car.
  */
-export interface CarMock extends Car
-{
-	remainingDistance: number;
-	trackProgress: number;
-}
+export type CarMock = Writeable<Car>;
 
 
 /**
@@ -18,15 +16,28 @@ export interface CarMock extends Car
  */
 export function CarMocker(template?: Partial<CarMock>): CarMock
 {
+	const guests: number[] = [];
 	const car = Mocker<CarMock>({
 		type: "car",
-		peeps: [],
+		status: "waiting_for_passengers", // id 0
+		peeps: guests,
+		guests,
 		remainingDistance: 0,
-		trackLocation: { x: 0, y: 0, z: 0, direction: 0 },
+		trackLocation: CoordsMock(),
 		trackProgress: 0,
+		subposition: 0,
 		poweredAcceleration: 0,
 		poweredMaxSpeed: 0,
+		acceleration: 0,
+		velocity: 0,
 		vehicleObject: 0,
+		currentStation: 0,
+		nextCarOnTrain: null,
+		nextCarOnRide: null,
+		previousCarOnRide: null,
+		gForces: { lateralG: 0, verticalG: 0 },
+		colours: { body: 0, trim: 0, tertiary: 0 },
+
 		travelBy(distance: number): void
 		{
 			this.remainingDistance = ((this.remainingDistance) ? this.remainingDistance : 0) + distance;
