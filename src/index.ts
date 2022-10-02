@@ -17,7 +17,7 @@ import { RideObjectVehicleMock } from "./mocks/objects/rideObjectVehicle";
 import { ParkMock, ParkMocker } from "./mocks/park";
 import { RideMocker } from "./mocks/ride";
 import { TileMocker } from "./mocks/tile";
-import { TrackIteratorMock, TrackIteratorMocker } from "./mocks/tracks/trackIterator";
+import { TrackIteratorMock, TrackIteratorMocker, TrackPieceMock } from "./mocks/tracks/trackIterator";
 import { TrackSegmentMock, TrackSegmentMocker } from "./mocks/tracks/trackSegment";
 import { UiMock, UiMocker } from "./mocks/ui/ui";
 import { ViewportMocker } from "./mocks/ui/viewport";
@@ -204,13 +204,15 @@ export interface Mock
 
 	/**
 	 * Create a mock of an OpenRCT2 track iterator.
-	 *  * `segment` and `segmentIndex` map to the `segments` array.
-	 *  * `next` and `previous` increment and decrement `segmentIndex` respectively.
+	 *  * `position`, `nextPosition`, `previousPosition` map to the `trackPieces` array based on `trackPieceIndex`.
+	 *  * `segment` maps to the `segments` array based on the `trackType` in the `trackPieces` array.
+	 *  * `next` and `previous` increment and decrement `trackPieceIndex` respectively.
 	 */
 	trackIterator: MockTemplate<TrackIteratorMock>;
 
 	/**
 	 * Create a mock of an OpenRCT2 track segment.
+	 *  * `getSubpositionLength` and `getSubpositions` map to the `subpositions` array.
 	 */
 	trackSegment: MockTemplate<TrackSegmentMock>;
 
@@ -274,4 +276,4 @@ const Mock: Mock = Object.assign(Mocker,
 
 
 export default Mock;
-export type { ContextMock, GameMapMock, GuestMock, ParkMock, PeepMock, StaffMock, TrackIteratorMock, TrackSegmentMock, UiMock, WindowMock };
+export type { ContextMock, GameMapMock, GuestMock, ParkMock, PeepMock, StaffMock, TrackIteratorMock, TrackPieceMock, TrackSegmentMock, UiMock, WindowMock };
