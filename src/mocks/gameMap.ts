@@ -25,6 +25,7 @@ export interface GameMapMock extends GameMap
  */
 export function GameMapMocker(template?: Partial<GameMapMock>): GameMapMock
 {
+	const templateRides = template?.rides;
 	const mock = Mocker<GameMapMock>({
 		rides: [], // = a default property.
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,21 +37,21 @@ export function GameMapMocker(template?: Partial<GameMapMock>): GameMapMock
 		},
 		getEntity(id: number): Entity
 		{
-			const result = ArrayHelper.tryFind(this.entities, r => r.id === id);
-			if (!result)
+			if (!this.entities)
 			{
 				return EntityMocker();
 			}
-			return result;
+			return ArrayHelper.tryFind(this.entities, r => r.id === id)
+				|| <Entity><unknown>null;
 		},
 		getRide(id: number): Ride
 		{
-			const result = ArrayHelper.tryFind(this.rides, r => r.id === id);
-			if (!result)
+			if (!this.rides && !templateRides)
 			{
 				return RideMocker();
 			}
-			return result;
+			return ArrayHelper.tryFind(this.rides, r => r.id === id)
+				|| <Ride><unknown>null;
 		},
 		getTile(x: number, y: number): Tile
 		{
@@ -61,7 +62,7 @@ export function GameMapMocker(template?: Partial<GameMapMock>): GameMapMock
 			if (Array.isArray(this.tiles))
 			{
 				const tile = ArrayHelper.tryFind(this.tiles, t => t.x === x && t.y === y);
-				return (tile) ? tile : TileMocker();
+				return (tile) ? tile : TileMocker({ x, y });
 			}
 			const tile = this.tiles; // set x,y to required x,y if not set on tile.
 			return { x, y, ...(tile as Partial<Tile>) } as Tile;

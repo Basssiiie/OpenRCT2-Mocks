@@ -156,5 +156,5 @@ test("Get unknown window returns null", t =>
 
 	const unknown = mock.getWindow("get unknown");
 
-	t.falsy(unknown);
+	t.is(unknown, <Window><unknown>null);
 });

@@ -89,7 +89,7 @@ test("Get empty array if entities not specified", t =>
 });
 
 
-test("Unknown entity returns default mock", t =>
+test("Unknown entity returns null", t =>
 {
 	const mock = GameMapMocker({
 		entities: [
@@ -99,7 +99,7 @@ test("Unknown entity returns default mock", t =>
 
 	const entity = mock.getEntity(5);
 
-	t.truthy(entity);
+	t.is(entity, <Entity><unknown>null);
 });
 
 
@@ -168,7 +168,7 @@ test("Number of rides is zero if rides is not specified", t =>
 });
 
 
-test("Unknown ride throws error", t =>
+test("Unknown ride returns null", t =>
 {
 	const mock = GameMapMocker({
 		rides: [
@@ -178,7 +178,7 @@ test("Unknown ride throws error", t =>
 
 	const ride = mock.getRide(5);
 
-	t.truthy(ride);
+	t.is(ride, <Ride><unknown>null);
 });
 
 

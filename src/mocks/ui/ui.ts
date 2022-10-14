@@ -63,11 +63,8 @@ export function UiMocker(template?: Partial<UiMock>): UiMock
 		},
 		getWindow(id: string | number): Window
 		{
-			const window = ArrayHelper.tryFind(this.createdWindows, w => w.classificationName === id || w.classification === id);
-			if (!window)
-				return <Window><unknown>null;
-
-			return window as Window;
+			return ArrayHelper.tryFind(this.createdWindows, w => w.classificationName === id || w.classification === id)
+				|| <Window><unknown>null;
 		},
 
 		...template,

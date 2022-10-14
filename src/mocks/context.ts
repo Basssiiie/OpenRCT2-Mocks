@@ -63,11 +63,8 @@ export function ContextMocker(template?: Partial<ContextMock>): ContextMock
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		getObject(type: ObjectType, index: number): any
 		{
-			const result = ArrayHelper.tryFind(this.objects, o => o.index === index && o.type === type);
-			if (!result)
-				return <LoadedObject><unknown>null;
-
-			return result;
+			return ArrayHelper.tryFind(this.objects, o => o.index === index && o.type === type)
+				|| <LoadedObject><unknown>null;
 		},
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		getAllObjects(type: ObjectType): any[]

@@ -54,11 +54,7 @@ export function WindowMocker(template?: Partial<Window | WindowDesc>): WindowMoc
 		classificationName: className,
 		findWidget<T extends Widget>(name: string): T
 		{
-			const result = ArrayHelper.tryFind(this.widgets, w => w.name === name);
-			if (!result)
-				throw new Error(`Widget not found: '${name}'`);
-
-			return result as T;
+			return <T>(ArrayHelper.tryFind(this.widgets, w => w.name === name) || <unknown>null);
 		},
         bringToFront(): void
 		{
