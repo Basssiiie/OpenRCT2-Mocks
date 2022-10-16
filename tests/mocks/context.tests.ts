@@ -279,6 +279,26 @@ test("Execute action triggers subscriptions", t =>
 });
 
 
+test("Get type id for action", t =>
+{
+	const mock = ContextMocker({
+		getTypeIdForAction: (action: string) => action.length
+	});
+
+	const hits: number[] = [];
+	mock.subscribe("action.execute", t => hits.push(t.type));
+
+	mock.executeAction("balloonpress", {});
+	t.deepEqual(hits, [ 12 ]);
+
+	mock.executeAction("landraise", {});
+	t.deepEqual(hits, [ 12, 9 ]);
+
+	mock.executeAction("largescenerysetcolour", {});
+	t.deepEqual(hits, [ 12, 9, 21 ]);
+});
+
+
 test("Get random returns min by default", t =>
 {
 	const mock = ContextMocker();

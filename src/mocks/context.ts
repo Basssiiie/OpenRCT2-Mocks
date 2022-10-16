@@ -39,7 +39,7 @@ export interface RegisteredAction
 	/**
 	 * The name of this registered action
 	 */
-	action: string;
+	action: ActionType | string;
 
 	/**
 	 * The method that will be called to validate the action.
@@ -72,6 +72,12 @@ export interface ContextMock extends Writeable<Context>
 	 * Keeps track of registered subscriptions to OpenRCT2 hooks.
 	 */
 	subscriptions: Subscription[];
+
+	/**
+	 * Implement this callback to translate a game action into an action type id
+	 * for use in {@link GameActionEventArgs}.
+	 */
+	getTypeIdForAction: (action: ActionType | string) => number;
 }
 
 
@@ -168,9 +174,14 @@ function queryOrExecuteAction(context: Partial<ContextMock>, hook: "action.query
 
 	if (context.subscriptions)
 	{
+		const eventArgs: Writeable<Partial<GameActionEventArgs>> = { action, args, result };
+		if (context.getTypeIdForAction)
+		{
+			eventArgs.type = context.getTypeIdForAction(action);
+		}
 		context.subscriptions
 			.filter(s => s.hook === hook && !s.isDisposed)
-			.forEach(s => s.callback({ action, args, result }));
+			.forEach(s => s.callback(eventArgs));
 	}
 	return result;
 }
