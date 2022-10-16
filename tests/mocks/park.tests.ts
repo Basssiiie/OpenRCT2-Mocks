@@ -18,7 +18,7 @@ test("All auto-mocked members are overridable", t =>
 
 	mock.getFlag("open");
 	mock.setFlag("noMoney", true);
-	t.deepEqual([ "open","noMoney" ], hits);
+	t.deepEqual(hits, [ "open","noMoney" ]);
 });
 
 

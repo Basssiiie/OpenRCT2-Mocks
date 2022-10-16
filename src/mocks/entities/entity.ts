@@ -11,7 +11,7 @@ let entityId = 0;
 export function EntityMocker(template?: Partial<Entity>): Entity
 {
 	return Mocker({
-		id: (++entityId),
+		id: (entityId++),
 
 		...template,
 	});

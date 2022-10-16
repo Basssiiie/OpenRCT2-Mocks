@@ -11,6 +11,9 @@ import { PeepMock } from "./mocks/entities/peep";
 import { StaffMock, StaffMocker } from "./mocks/entities/staff";
 import { GameDateMocker } from "./mocks/gameDate";
 import { GameMapMock, GameMapMocker } from "./mocks/gameMap";
+import { NetworkMock, NetworkMocker } from "./mocks/network/network";
+import { PlayerMock, PlayerMocker } from "./mocks/network/player";
+import { PlayerGroupMock, PlayerGroupMocker } from "./mocks/network/playerGroup";
 import { LoadedObjectMocker } from "./mocks/objects/loadedObject";
 import { RideObjectMocker } from "./mocks/objects/rideObject";
 import { RideObjectVehicleMock } from "./mocks/objects/rideObjectVehicle";
@@ -120,6 +123,16 @@ export interface Mock
 	map: MockTemplate<GameMapMock>;
 
 	/**
+	 * Create a mock of the OpenRCT2 network system.
+	 *
+	 * Auto-mocks the following members if they are not set on the given template:
+	 *  * `numPlayers`, `getPlayer` and `kickPlayer` map to the `players` property.
+	 *  * `numGroups`, `addGroup`, `getGroup` and `removeGroup` map to the `groups` property.
+	 *  * `players` and `groups` are initialised with one default player or group.
+	 */
+	network: MockTemplate<NetworkMock>;
+
+	/**
 	 * Create a mock of an OpenRCT2 park.
 	 *
 	 * Auto-mocks the following members if they are not set on the given template:
@@ -128,6 +141,16 @@ export interface Mock
 	 *    If `map` is not defined, it returns 0.
 	 */
 	park: MockTemplate<ParkMock>;
+
+	/**
+	 * Create a mock of an OpenRCT2 player in a multiplayer game.
+	 */
+	player: MockTemplate<PlayerMock>;
+
+	/**
+	 * Create a mock of an OpenRCT2 player group in a multiplayer game.
+	 */
+	playerGroup: MockTemplate<PlayerGroupMock>;
 
 	/**
 	 * Create a mock of an OpenRCT2 ride.
@@ -258,7 +281,10 @@ const Mock: Mock = Object.assign(Mocker,
 	guest: GuestMocker,
 	loadedObject: LoadedObjectMocker,
 	map: GameMapMocker,
+	network: NetworkMocker,
 	park: ParkMocker,
+	player: PlayerMocker,
+	playerGroup: PlayerGroupMocker,
 	ride: RideMocker,
 	rideObject: RideObjectMocker,
 	rideObjectVehicle: RideObjectVehicleMock,
@@ -276,4 +302,4 @@ const Mock: Mock = Object.assign(Mocker,
 
 
 export default Mock;
-export type { ContextMock, GameMapMock, GuestMock, ParkMock, PeepMock, StaffMock, TrackIteratorMock, TrackPieceMock, TrackSegmentMock, UiMock, WindowMock };
+export type { ContextMock, GameMapMock, GuestMock, NetworkMock, ParkMock, PlayerMock, PlayerGroupMock, PeepMock, StaffMock, TrackIteratorMock, TrackPieceMock, TrackSegmentMock, UiMock, WindowMock };
