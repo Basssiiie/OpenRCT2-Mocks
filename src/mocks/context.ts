@@ -1,12 +1,13 @@
 import { Mocker } from "../core/mocker";
 import * as ArrayHelper from "../utilities/array";
+import { Writeable } from "../utilities/writable";
 import { TrackSegmentMocker } from "./tracks/trackSegment";
 
 
 /**
  * Keeps track of a subscription to an OpenRCT2 hook.
  */
-interface Subscription
+export interface Subscription
 {
 	/**
 	 * The hook which this subscription subscribes to.
@@ -31,9 +32,31 @@ interface Subscription
 
 
 /**
+ * Keeps track of a OpenRCT2 custom registered action.
+ */
+export interface RegisteredAction
+{
+	/**
+	 * The name of this registered action
+	 */
+	action: string;
+
+	/**
+	 * The method that will be called to validate the action.
+	 */
+	query: (args: object) => GameActionResult;
+
+	/**
+	 * The method that will be called to execute the action.
+	 */
+	execute: (args: object) => GameActionResult;
+}
+
+
+/**
  * Mock that adds additional configurations to the context.
  */
-export interface ContextMock extends Context
+export interface ContextMock extends Writeable<Context>
 {
 	/**
 	 * Keeps track of loaded objects within this context.
@@ -41,14 +64,14 @@ export interface ContextMock extends Context
 	objects: LoadedObject[];
 
 	/**
+	 * Keeps track of registered custom actions.
+	 */
+	registeredActions: RegisteredAction[];
+
+	/**
 	 * Keeps track of registered subscriptions to OpenRCT2 hooks.
 	 */
 	subscriptions: Subscription[];
-
-	/**
-	 * Set a custom result for executed game actions.
-	 */
-	gameActionResult: GameActionResult;
 }
 
 
@@ -59,6 +82,8 @@ export interface ContextMock extends Context
 export function ContextMocker(template?: Partial<ContextMock>): ContextMock
 {
 	return Mocker<ContextMock>({
+		apiVersion: 0,
+		mode: "normal",
 		subscriptions: [],
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		getObject(type: ObjectType, index: number): any
@@ -100,20 +125,52 @@ export function ContextMocker(template?: Partial<ContextMock>): ContextMock
 			}
 			return subscription.disposable;
 		},
-		executeAction(action: ActionType, args: Record<string, unknown>, callback: (result: GameActionResult) => void): void
+		registerAction(action: string, query: (args: object) => GameActionResult, execute: (args: object) => GameActionResult): void
 		{
-			const result: GameActionResult = (this.gameActionResult)
-				? this.gameActionResult : { cost: 1 };
-
-			if (this.subscriptions)
+			if (ArrayHelper.tryFind(this.registeredActions, r => r.action === action))
 			{
-				this.subscriptions
-					.filter(s => s.hook === "action.execute" && !s.isDisposed)
-					.forEach(s => s.callback(<GameActionEventArgs>{ action, args, result }));
+				throw Error("Action has already been registered.");
 			}
-			callback(result);
+			const registration = { action, query, execute };
+			if (this.registeredActions)
+			{
+				this.registeredActions.push(registration);
+			}
+			else
+			{
+				this.registeredActions = [ registration ];
+			}
+		},
+		queryAction(action: ActionType, args: object, callback?: (result: GameActionResult) => void): void
+		{
+			const result = queryOrExecuteAction(this, "action.query", action, args, (r, a) => r.query(a));
+			callback?.(result);
+		},
+		executeAction(action: ActionType, args: Record<string, unknown>, callback?: (result: GameActionResult) => void): void
+		{
+			const result = queryOrExecuteAction(this, "action.execute", action, args, (r, a) => r.execute(a));
+			callback?.(result);
+		},
+		getRandom(min: number): number
+		{
+			return min;
 		},
 
 		...template,
 	});
+}
+
+
+function queryOrExecuteAction(context: Partial<ContextMock>, hook: "action.query" | "action.execute", action: ActionType, args: object, queryOrExecute: (action: RegisteredAction, args: object) => GameActionResult): GameActionResult
+{
+	const registration = ArrayHelper.tryFind(context.registeredActions, r => r.action === action);
+	const result = (registration) ? queryOrExecute(registration, args) : { cost: 1 };
+
+	if (context.subscriptions)
+	{
+		context.subscriptions
+			.filter(s => s.hook === hook && !s.isDisposed)
+			.forEach(s => s.callback({ action, args, result }));
+	}
+	return result;
 }

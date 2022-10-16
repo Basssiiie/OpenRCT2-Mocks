@@ -1,6 +1,7 @@
 /// <reference path="../../lib/openrct2.d.ts" />
 
 import test from "ava";
+import Mock from "../../src";
 import { NetworkMocker } from "../../src/mocks/network/network";
 
 
@@ -45,7 +46,7 @@ test("All auto-mocked members are overridable", t =>
 
 test("Network can add group", t =>
 {
-	const mock = NetworkMocker();
+	const mock = NetworkMocker({ groups: [] });
 
 	t.is(mock.numGroups, 0);
 	t.is(mock.groups.length, 0);
@@ -69,16 +70,15 @@ test("Network can add group", t =>
 
 test("Network can get group", t =>
 {
-	const mock = NetworkMocker();
-	mock.addGroup();
+	const mock = NetworkMocker({groups: [
+		Mock.playerGroup({ name: "aa" }),
+	]});
 
 	const group = mock.getGroup(0);
 
 	t.truthy(group);
 
-	group.name = "aa";
 	mock.addGroup();
-
 	t.is(mock.getGroup(0).name, "aa");
 	t.truthy(mock.getGroup(1));
 	t.not(mock.getGroup(1), mock.getGroup(0));
@@ -87,16 +87,13 @@ test("Network can get group", t =>
 
 test("Network can remove group", t =>
 {
-	const mock = NetworkMocker();
-	mock.addGroup();
-	mock.addGroup();
-	mock.addGroup();
+	const mock = NetworkMocker({groups: [
+		Mock.playerGroup({ name: "a" }),
+		Mock.playerGroup({ name: "b" }),
+		Mock.playerGroup({ name: "c" }),
+	]});
 
 	t.is(mock.numGroups, 3);
-
-	mock.groups[0].name = "a";
-	mock.groups[1].name = "b";
-	mock.groups[2].name = "c";
 
 	mock.removeGroup(1);
 
@@ -108,9 +105,10 @@ test("Network can remove group", t =>
 
 test("Network can get player", t =>
 {
-	const mock = NetworkMocker({
-		players: <Player[]>[ { name: "a" }, { name: "b"} ]
-	});
+	const mock = NetworkMocker({ players: [
+		Mock.player({ name: "a" }),
+		Mock.player({ name: "b" })
+	]});
 
 	t.is(mock.numPlayers, 2);
 	t.is(mock.getPlayer(0).name, "a");
@@ -120,9 +118,11 @@ test("Network can get player", t =>
 
 test("Network can remove player", t =>
 {
-	const mock = NetworkMocker({
-		players: <Player[]>[ { name: "a" }, { name: "b"}, { name: "c"} ]
-	});
+	const mock = NetworkMocker({ players: [
+		Mock.player({ name: "a" }),
+		Mock.player({ name: "b" }),
+		Mock.player({ name: "c" }),
+	]});
 
 	t.is(mock.numPlayers, 3);
 

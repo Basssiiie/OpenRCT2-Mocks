@@ -67,7 +67,10 @@ export interface Mock
 	 *
 	 * Auto-mocks the following members if they are not set on the given template:
 	 *  * `getObject` and `getAllObjects` query the `objects` array.
-	 *  * `subscribe` and `executeAction` map to the `subscriptions` property.
+	 *  * `registerAction` maps to the `registeredActions` array.
+	 *  * `subscribe` maps to the `subscriptions` property.
+	 *  * `queryAction` and `executeAction` will trigger any actions in the `registeredActions` and `subscriptions` arrays.
+	 *  * `getRandom` always returns `min` by default.
 	 */
 	context: MockTemplate<ContextMock>;
 
