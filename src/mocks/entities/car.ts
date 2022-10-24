@@ -22,12 +22,10 @@ export function CarMocker(template?: Partial<CarMock>): CarMock
 		status: "waiting_for_passengers", // id 0
 		peeps: guests,
 		guests,
-		remainingDistance: 0,
 		trackLocation: CoordsMock(),
 		trackProgress: 0,
+		remainingDistance: 0,
 		subposition: 0,
-		poweredAcceleration: 0,
-		poweredMaxSpeed: 0,
 		acceleration: 0,
 		velocity: 0,
 		vehicleObject: 0,
@@ -47,7 +45,7 @@ export function CarMocker(template?: Partial<CarMock>): CarMock
 		...(EntityMocker(template) as Partial<Entity>)
 	});
 	// Init car based on object if any is specified
-	if (global.context && "rideObject" in car && "vehicleObject" in car)
+	if ("rideObject" in car && "vehicleObject" in car)
 	{
 		tryUpdateCarFromObject(car);
 	}
@@ -60,16 +58,40 @@ export function CarMocker(template?: Partial<CarMock>): CarMock
  */
 function tryUpdateCarFromObject(car: CarMock): void
 {
-	const rideObject = global.context.getObject("ride", car.rideObject);
-	if (!rideObject)
-		return;
+	const obj = getVehicleObject(car);
 
-	const obj = rideObject.vehicles[car.vehicleObject];
-	if (!obj)
-		return;
+	if (!("numSeats" in car))
+	{
+		car.numSeats = (obj && obj.numSeats) ? obj.numSeats : 0;
+	}
+	if (!("mass" in car))
+	{
+		car.mass = (obj && obj.carMass) ? obj.carMass : 0;
+	}
+	if (!("poweredAcceleration" in car))
+	{
+		car.poweredAcceleration = (obj && obj.poweredAcceleration) ? obj.poweredAcceleration : 0;
+	}
+	if (!("poweredMaxSpeed" in car))
+	{
+		car.poweredMaxSpeed = (obj && obj.poweredMaxSpeed) ? obj.poweredMaxSpeed : 0;
+	}
+}
 
-	car.numSeats = (obj.numSeats) ? obj.numSeats : 0;
-	car.mass = (obj.carMass) ? obj.carMass : 0;
-	car.poweredAcceleration = (obj.poweredAcceleration) ? obj.poweredAcceleration : 0;
-	car.poweredMaxSpeed = (obj.poweredMaxSpeed) ? obj.poweredMaxSpeed : 0;
+
+function getVehicleObject(car: CarMock): RideObjectVehicle | null
+{
+	if (global.context)
+	{
+		const rideObject = global.context.getObject("ride", car.rideObject);
+		if (rideObject)
+		{
+			const obj = rideObject.vehicles[car.vehicleObject];
+			if (obj)
+			{
+				return obj;
+			}
+		}
+	}
+	return null;
 }
