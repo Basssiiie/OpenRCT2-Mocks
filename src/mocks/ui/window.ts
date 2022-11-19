@@ -2,6 +2,9 @@ import { Mocker } from "../../core/mocker";
 import * as ArrayHelper from "../../utilities/array";
 
 
+let windowNumber = 0;
+
+
 /**
  * Mock that adds additional configurations to the window.
  */
@@ -30,7 +33,8 @@ export interface WindowMock extends Window
 export function WindowMocker(template?: Partial<Window | WindowDesc>): WindowMock
 {
 	let classId: number | undefined = undefined,
-		className: string | undefined = undefined;
+		className: string | undefined = undefined,
+		templateWidgets: Widget[] | undefined;
 
 	if (template)
 	{
@@ -48,10 +52,13 @@ export function WindowMocker(template?: Partial<Window | WindowDesc>): WindowMoc
 				classId = classValue as number;
 			}
 		}
+		templateWidgets = template.widgets;
 	}
 
-	return Mocker<WindowMock>({
+	const mock = Mocker<WindowMock>({
 		classificationName: className,
+		number: windowNumber++,
+		tabIndex: 0,
 		findWidget<T extends Widget>(name: string): T
 		{
 			return <T>(ArrayHelper.tryFind(this.widgets, w => w.name === name) || <unknown>null);
@@ -66,6 +73,13 @@ export function WindowMocker(template?: Partial<Window | WindowDesc>): WindowMoc
 		},
 
 		...template,
-		classification: classId,
+		classification: classId ?? 225, // custom windows are always 225
+		get widgets(): Widget[] | undefined
+		{
+			const widgets = templateWidgets || [];
+			const tabWidgets = (template && "tabs" in template && template.tabs) ? template.tabs[template.tabIndex || 0]?.widgets : undefined;
+			return (tabWidgets) ? widgets.concat(tabWidgets) : widgets;
+		}
 	});
+	return mock;
 }
