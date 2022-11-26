@@ -83,7 +83,7 @@ function polyfillWidgets(widgets: Widget[] | undefined): void
 		{
 			if (widget.type === "viewport")
 			{
-				polyfillViewport(widget as ViewportWidget);
+				polyfillViewport(widget);
 			}
 		}
 	}

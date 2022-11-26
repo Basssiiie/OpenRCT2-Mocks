@@ -1,5 +1,6 @@
 import { Mocker } from "../../core/mocker";
 import * as ArrayHelper from "../../utilities/array";
+import { addGet } from "../../utilities/object";
 
 
 let windowNumber = 0;
@@ -8,7 +9,7 @@ let windowNumber = 0;
 /**
  * Mock that adds additional configurations to the window.
  */
-export interface WindowMock extends Window
+export interface WindowMock extends Window, Pick<WindowDesc, "tabs" | "onClose" | "onUpdate" | "onTabChange">
 {
 	/**
 	 * The original classification name, if it was specified for the window description.
@@ -19,10 +20,6 @@ export interface WindowMock extends Window
 	 * Whether the window is currently open or not.
 	 */
 	isOpen: boolean;
-
-	onClose?: () => void;
-	onUpdate?: () => void;
-	onTabChange?: () => void;
 }
 
 
@@ -74,12 +71,12 @@ export function WindowMocker(template?: Partial<Window | WindowDesc>): WindowMoc
 
 		...template,
 		classification: classId ?? 225, // custom windows are always 225
-		get widgets(): Widget[] | undefined
-		{
-			const widgets = templateWidgets || [];
-			const tabWidgets = (template && "tabs" in template && template.tabs) ? template.tabs[template.tabIndex || 0]?.widgets : undefined;
-			return (tabWidgets) ? widgets.concat(tabWidgets) : widgets;
-		}
+	});
+	addGet(mock, "widgets", function(this: WindowMock): Widget[]
+	{
+		const widgets = templateWidgets || [];
+		const tabWidgets = ("tabs" in this && this.tabs) ? this.tabs[this.tabIndex || 0]?.widgets : undefined;
+		return (tabWidgets) ? widgets.concat(tabWidgets) : widgets;
 	});
 	return mock;
 }
