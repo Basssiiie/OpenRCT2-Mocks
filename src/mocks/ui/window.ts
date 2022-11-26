@@ -67,6 +67,7 @@ export function WindowMocker(template?: Partial<Window | WindowDesc>): WindowMoc
 		close(): void
 		{
 			this.isOpen = false;
+			this.onClose?.();
 		},
 
 		...template,

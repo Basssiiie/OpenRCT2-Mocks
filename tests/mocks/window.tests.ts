@@ -64,3 +64,16 @@ test("All auto-mocked members are overridable", t =>
 
 	t.deepEqual(hits, [ "onClose", "onUpdate", "onTabChange", "close", "bringToFront", "findWidget: bobby" ]);
 });
+
+
+test("Trigger on close event on close", t =>
+{
+	const hits: string[] = [];
+	const mock = WindowMocker({
+		onClose() { hits.push("on close"); }
+	});
+
+	mock.close();
+
+	t.deepEqual(hits, [ "on close" ]);
+});

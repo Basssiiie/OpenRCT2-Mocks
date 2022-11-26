@@ -267,6 +267,8 @@ export interface Mock
 	 * Auto-mocks the following members if they are not set on the given template:
 	 *  * `findWidget` queries the `widgets` array.
 	 *  * `classificationName` maps to the original string based classification, if it was specified.
+	 *  * `widgets` returns widgets from the currently selected tab concatenated to its end.
+	 *  * `close` will trigger the `onClose` event if specified.
 	 */
 	window: MockTemplate<WindowMock>;
 }
