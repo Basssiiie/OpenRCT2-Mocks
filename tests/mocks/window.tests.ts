@@ -50,8 +50,8 @@ test("All auto-mocked members are overridable", t =>
 	t.is(mock.title, "this is title");
 	t.deepEqual(mock.colours, [ 4, 7, 11 ]);
 	t.deepEqual(mock.widgets, [
-		{ type: "label", x: 4, y: 6, width: 45, height: 19 },
-		{ type: "colourpicker", x: 65, y: 1, width: 52, height: 41 }
+		{ type: "label", x: 4, y: 6, width: 45, height: 19, window: mock },
+		{ type: "colourpicker", x: 65, y: 1, width: 52, height: 41, window: mock }
 	]);
 	t.is(mock.tabIndex, 1);
 

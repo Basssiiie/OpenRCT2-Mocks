@@ -1,5 +1,5 @@
 import { Mocker } from "../../core/mocker";
-import { Writeable } from "../../utilities/writable";
+import { Mutable } from "../../utilities/mutable";
 
 
 let playerId = 0;
@@ -8,7 +8,7 @@ let playerId = 0;
 /**
  * Mock that adds additional configurations to the player.
  */
-export type PlayerMock = Writeable<Player>;
+export type PlayerMock = Mutable<Player>;
 
 
 /**

@@ -1,6 +1,6 @@
 import { Mocker } from "../core/mocker";
 import * as ArrayHelper from "../utilities/array";
-import { Writeable } from "../utilities/writable";
+import { Mutable } from "../utilities/mutable";
 import { TrackSegmentMocker } from "./tracks/trackSegment";
 
 
@@ -56,7 +56,7 @@ export interface RegisteredAction
 /**
  * Mock that adds additional configurations to the context.
  */
-export interface ContextMock extends Writeable<Context>
+export interface ContextMock extends Mutable<Context>
 {
 	/**
 	 * Keeps track of loaded objects within this context.
@@ -174,7 +174,7 @@ function queryOrExecuteAction(context: Partial<ContextMock>, hook: "action.query
 
 	if (context.subscriptions)
 	{
-		const eventArgs: Writeable<Partial<GameActionEventArgs>> = { action, args, result };
+		const eventArgs: Mutable<Partial<GameActionEventArgs>> = { action, args, result };
 		if (context.getTypeIdForAction)
 		{
 			eventArgs.type = context.getTypeIdForAction(action);

@@ -10,7 +10,8 @@ import * as ArrayHelper from "../../utilities/array";
 export interface UiMock extends Ui
 {
 	/**
-	 * Keeps track of all windows that have been created.
+	 * Keeps track of all windows that have been created, with the most recently created
+	 * windows inserted at the front.
 	 */
 	createdWindows: WindowMock[];
 }
@@ -29,7 +30,6 @@ export function UiMocker(template?: Partial<UiMock>): UiMock
 		{
 			const window = WindowMocker(desc);
 			window.isOpen = true;
-			polyfillWidgets(window.widgets);
 			if (this.createdWindows)
 			{
 				this.createdWindows.unshift(window);
@@ -69,51 +69,4 @@ export function UiMocker(template?: Partial<UiMock>): UiMock
 
 		...template,
 	});
-}
-
-
-/**
- * Polyfills functions in widgets that are usually not supplied on widget creation.
- */
-function polyfillWidgets(widgets: Widget[] | undefined): void
-{
-	if (widgets)
-	{
-		for (const widget of widgets)
-		{
-			if (widget.type === "viewport")
-			{
-				polyfillViewport(widget);
-			}
-		}
-	}
-}
-
-
-// A mock of a viewport to take functions from.
-const viewportMock = ViewportMocker();
-
-
-/**
- * Polyfills functions on the viewport.
- */
-function polyfillViewport(widget: ViewportWidget): void
-{
-	if (!widget.viewport)
-	{
-		widget.viewport = {} as Viewport;
-	}
-	const viewport = widget.viewport;
-	if (!viewport.getCentrePosition)
-	{
-		viewport.getCentrePosition = viewportMock.getCentrePosition;
-	}
-	if (!viewport.moveTo)
-	{
-		viewport.moveTo = viewportMock.moveTo;
-	}
-	if (!viewport.scrollTo)
-	{
-		viewport.scrollTo = viewportMock.scrollTo;
-	}
 }

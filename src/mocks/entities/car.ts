@@ -1,5 +1,5 @@
 import { Mocker } from "../../core/mocker";
-import { Writeable } from "../../utilities/writable";
+import { Mutable } from "../../utilities/mutable";
 import { CoordsMock } from "../coords";
 import { EntityMocker } from "./entity";
 
@@ -7,7 +7,7 @@ import { EntityMocker } from "./entity";
 /**
  * Mock that adds additional configurations to the car.
  */
-export type CarMock = Writeable<Car>;
+export type CarMock = Mutable<Car>;
 
 
 /**
@@ -62,19 +62,19 @@ function tryUpdateCarFromObject(car: CarMock): void
 
 	if (!("numSeats" in car))
 	{
-		car.numSeats = (obj && obj.numSeats) ? obj.numSeats : 0;
+		(<Car>car).numSeats = (obj && obj.numSeats) ? obj.numSeats : 0;
 	}
 	if (!("mass" in car))
 	{
-		car.mass = (obj && obj.carMass) ? obj.carMass : 0;
+		(<Car>car).mass = (obj && obj.carMass) ? obj.carMass : 0;
 	}
 	if (!("poweredAcceleration" in car))
 	{
-		car.poweredAcceleration = (obj && obj.poweredAcceleration) ? obj.poweredAcceleration : 0;
+		(<Car>car).poweredAcceleration = (obj && obj.poweredAcceleration) ? obj.poweredAcceleration : 0;
 	}
 	if (!("poweredMaxSpeed" in car))
 	{
-		car.poweredMaxSpeed = (obj && obj.poweredMaxSpeed) ? obj.poweredMaxSpeed : 0;
+		(<Car>car).poweredMaxSpeed = (obj && obj.poweredMaxSpeed) ? obj.poweredMaxSpeed : 0;
 	}
 }
 

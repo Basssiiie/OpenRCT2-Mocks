@@ -1,6 +1,6 @@
 import { Mocker } from "../../core/mocker";
 import { tryAddGet } from "../../utilities/object";
-import { Writeable } from "../../utilities/writable";
+import { Mutable } from "../../utilities/mutable";
 import { PlayerMocker } from "./player";
 import { PlayerGroupMocker } from "./playerGroup";
 
@@ -8,7 +8,7 @@ import { PlayerGroupMocker } from "./playerGroup";
 /**
  * Mock that adds additional configurations to the network.
  */
-export type NetworkMock = Writeable<Network>;
+export type NetworkMock = Mutable<Network>;
 
 
 /**
