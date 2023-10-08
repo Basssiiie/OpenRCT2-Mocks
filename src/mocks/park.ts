@@ -34,8 +34,8 @@ export function ParkMocker(template?: Partial<ParkMock>): ParkMock
 		...template,
 	});
 	// If 'guests' is not set, attempt to calculate from map global.
-	tryAddGet(mock, "guests", () => (global.map)
-		? global.map.getAllEntities("guest").filter(g => g.isInPark).length
+	tryAddGet(mock, "guests", () => (globalThis.map)
+		? globalThis.map.getAllEntities("guest").filter(g => g.isInPark).length
 		: 0
 	);
 	return mock;

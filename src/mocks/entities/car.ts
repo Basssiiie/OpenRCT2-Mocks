@@ -81,9 +81,9 @@ function tryUpdateCarFromObject(car: CarMock): void
 
 function getVehicleObject(car: CarMock): RideObjectVehicle | null
 {
-	if (global.context)
+	if (globalThis.context)
 	{
-		const rideObject = global.context.getObject("ride", car.rideObject);
+		const rideObject = globalThis.context.getObject("ride", car.rideObject);
 		if (rideObject)
 		{
 			const obj = rideObject.vehicles[car.vehicleObject];

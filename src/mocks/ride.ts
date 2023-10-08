@@ -31,12 +31,12 @@ export function RideMocker(template?: Partial<RideMock>): RideMock
 	// Get 'object' from global context if not set.
 	tryAddGet(mock, "object", () =>
 	{
-		if (!global.context)
+		if (!globalThis.context)
 		{
 			return RideObjectMocker();
 		}
 		const objId = (typeof mock.objectId !== "number") ? mock.objectId : -1;
-		return global.context.getObject("ride", objId);
+		return globalThis.context.getObject("ride", objId);
 	});
 	return mock;
 }

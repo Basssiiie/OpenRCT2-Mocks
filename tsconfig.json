@@ -11,7 +11,7 @@
 		"outDir": "out",
 		"strict": true,
 		"target": "es5",
-		"lib": [ "es5" ]
+		"lib": [ "es5", "es6" ]
 	},
 	"include": [
 		"./lib/**/*.ts",

@@ -64,7 +64,7 @@ test("All auto-mocked members are overridable", t =>
 
 test("Vehicle properties can be taken from ride object mock if present", t =>
 {
-	global.context = Mock.context({ objects: [
+	globalThis.context = Mock.context({ objects: [
 		Mock.rideObject({ index: 45, vehicles: [
 			Mock.rideObjectVehicle({ numSeats: 5, carMass: 100, poweredAcceleration: 1, poweredMaxSpeed: 2 }),
 			Mock.rideObjectVehicle({ numSeats: 12, carMass: 310, poweredAcceleration: 40, poweredMaxSpeed: 50 })
@@ -85,7 +85,7 @@ test("Vehicle properties can be taken from ride object mock if present", t =>
 
 test("Vehicle object properties can still be manually mocked", t =>
 {
-	global.context = Mock.context({ objects: [
+	globalThis.context = Mock.context({ objects: [
 		Mock.rideObject({ index: 45, vehicles: [
 			Mock.rideObjectVehicle({ numSeats: 5, carMass: 100, poweredAcceleration: 1, poweredMaxSpeed: 2 }),
 			Mock.rideObjectVehicle({ numSeats: 12, carMass: 310, poweredAcceleration: 40, poweredMaxSpeed: 50 })

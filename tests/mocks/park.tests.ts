@@ -40,7 +40,7 @@ test("Guest count set overrides default", t =>
 
 test("Guest count counts guests on map when present", t =>
 {
-	global.map = Mock.map({
+	globalThis.map = Mock.map({
 		entities: [	Mock.guest(), Mock.staff(), Mock.guest(), Mock.guest() ]
 	});
 
@@ -52,7 +52,7 @@ test("Guest count counts guests on map when present", t =>
 
 test("Guest count skips guests not in park", t =>
 {
-	global.map = Mock.map({
+	globalThis.map = Mock.map({
 		entities: [
 			Mock.guest({ isInPark: false }),
 			Mock.guest({ isInPark: true }),

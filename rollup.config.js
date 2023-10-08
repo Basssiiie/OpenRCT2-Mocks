@@ -1,7 +1,7 @@
 import replace from "@rollup/plugin-replace";
+import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
-import { terser } from "rollup-plugin-terser";
 
 
 // Environment variables
@@ -43,7 +43,7 @@ const config = [
 				exports: "default"
 			}
 		],
-		plugins: plugins,
+		plugins,
 	},
 	{
 		// Minified build
@@ -62,6 +62,10 @@ const config = [
 		plugins: [
 			...plugins,
 			terser({
+				compress: {
+					passes: 5,
+					unsafe: true
+				},
 				format: {
 					comments: false,
 					quote_style: 1,
