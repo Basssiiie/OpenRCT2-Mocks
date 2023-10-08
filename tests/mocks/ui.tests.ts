@@ -80,15 +80,16 @@ test("Open window with viewport gets polyfilled", t =>
 	t.is(widget.type, "viewport");
 
 	const viewport = widget.viewport;
-	viewport?.moveTo({ x: 700, y: 900 });
-	t.truthy(viewport?.left);
-	t.truthy(viewport?.right);
-	t.truthy(viewport?.top);
-	t.truthy(viewport?.bottom);
+	t.truthy(viewport);
+	viewport.moveTo({ x: 700, y: 900 });
+	t.truthy(viewport.left);
+	t.truthy(viewport.right);
+	t.truthy(viewport.top);
+	t.truthy(viewport.bottom);
 
-	const center = viewport?.getCentrePosition();
-	t.is(center?.x, 700);
-	t.is(center?.y, 900);
+	const center = viewport.getCentrePosition();
+	t.is(center.x, 700);
+	t.is(center.y, 900);
 });
 
 
