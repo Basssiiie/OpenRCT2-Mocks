@@ -7,8 +7,11 @@ import { TileElementMocker } from "./elements/tileElement";
 /**
  * Mock that adds additional configurations to the tile.
  */
-interface TileMock extends Tile
+export interface TileMock extends Tile
 {
+	x: number;
+	y: number;
+	numElements: number;
 	elements: TileElement[];
 }
 
@@ -17,7 +20,7 @@ interface TileMock extends Tile
  * A mock of an tile.
  * @internal
  */
-export function TileMocker(template?: Partial<Tile>): Tile
+export function TileMocker(template?: Partial<Tile>): TileMock
 {
 	const mock = Mocker<TileMock>({
 		elements: [ // = a default property

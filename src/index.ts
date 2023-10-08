@@ -19,7 +19,7 @@ import { RideObjectMocker } from "./mocks/objects/rideObject";
 import { RideObjectVehicleMock } from "./mocks/objects/rideObjectVehicle";
 import { ParkMock, ParkMocker } from "./mocks/park";
 import { RideMocker } from "./mocks/ride";
-import { TileMocker } from "./mocks/tile";
+import { TileMock, TileMocker } from "./mocks/tile";
 import { TrackIteratorMock, TrackIteratorMocker, TrackPieceMock } from "./mocks/tracks/trackIterator";
 import { TrackSegmentMock, TrackSegmentMocker } from "./mocks/tracks/trackSegment";
 import { UiMock, UiMocker } from "./mocks/ui/ui";
@@ -212,7 +212,7 @@ export interface Mock
 	 *  * `getElement`, `insertElement`, `removeElement` and `numElements` map to the `elements` array.
 	 *  * `elements` contains a single mocked {@link Mock.surface|`surface`} tile element.
 	 */
-	tile: MockTemplate<Tile>;
+	tile: MockTemplate<TileMock>;
 
 	/**
 	 * Create a mock of an OpenRCT2 tile element.
@@ -307,4 +307,4 @@ const Mock: Mock = Object.assign(Mocker,
 
 
 export default Mock;
-export type { ContextMock, GameMapMock, GuestMock, NetworkMock, ParkMock, PlayerMock, PlayerGroupMock, PeepMock, StaffMock, TrackIteratorMock, TrackPieceMock, TrackSegmentMock, UiMock, WindowMock };
+export type { ContextMock, GameMapMock, GuestMock, NetworkMock, ParkMock, PeepMock, PlayerGroupMock, PlayerMock, StaffMock, TileMock, TrackIteratorMock, TrackPieceMock, TrackSegmentMock, UiMock, WindowMock };
