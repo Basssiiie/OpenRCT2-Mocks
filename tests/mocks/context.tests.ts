@@ -11,6 +11,7 @@ test("All auto-mocked members are overridable", t =>
 	const mock = ContextMocker({
 		apiVersion: 23,
 		mode: "scenario_editor",
+		captureImage() { hits.push("captureImage"); },
 		getObject() { hits.push("getObject"); return <never>{}; },
 		getAllObjects() { hits.push("getAllObjects"); return []; },
 		getTrackSegment() { hits.push("getTrackSegment"); return null; },
@@ -19,10 +20,13 @@ test("All auto-mocked members are overridable", t =>
 		queryAction() { hits.push("queryAction"); },
 		executeAction() { hits.push("executeAction"); },
 		getRandom() { hits.push("getRandom"); return 3; },
+		getIcon() { hits.push("getIcon"); return 4; },
+		formatString() { hits.push("formatString"); return ""; },
 	});
 
 	t.is(mock.apiVersion, 23);
 	t.is(mock.mode, "scenario_editor");
+	mock.captureImage({ zoom: 1, rotation: 3 });
 	mock.getObject("banner", 4);
 	mock.getAllObjects("music");
 	mock.getTrackSegment(6);
@@ -30,8 +34,10 @@ test("All auto-mocked members are overridable", t =>
 	mock.registerAction("qq", () => <never>({}), () => <never>({}));
 	mock.queryAction("bb", () => { /* action */ });
 	mock.executeAction("cc", () => { /* action */ });
+	mock.getIcon("arrow_up");
 	mock.getRandom(7, 9);
-	t.deepEqual(hits, [ "getObject", "getAllObjects", "getTrackSegment", "subscribe", "registerAction", "queryAction", "executeAction", "getRandom"]);
+	mock.formatString("test");
+	t.deepEqual(hits, ["captureImage", "getObject", "getAllObjects", "getTrackSegment", "subscribe", "registerAction", "queryAction", "executeAction", "getIcon", "getRandom", "formatString"]);
 });
 
 
