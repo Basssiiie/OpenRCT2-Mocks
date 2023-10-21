@@ -299,6 +299,16 @@ test("Get type id for action", t =>
 });
 
 
+test("Get icon id takes name length", t =>
+{
+	const mock = ContextMocker();
+
+	t.is(mock.getIcon("arrow_down"), 10);
+	t.is(mock.getIcon("rct1_simulate_off_pressed"), 25);
+	t.is(mock.getIcon("chat"), 4);
+});
+
+
 test("Get random returns min by default", t =>
 {
 	const mock = ContextMocker();
@@ -306,4 +316,22 @@ test("Get random returns min by default", t =>
 	t.is(mock.getRandom(2, 10), 2);
 	t.is(mock.getRandom(2000005, 99933339999), 2000005);
 	t.is(mock.getRandom(-100033, 0), -100033);
+});
+
+
+test("Format string formats arguments into tokens instead of replacing them", t =>
+{
+	const mock = ContextMocker();
+
+	const actual = mock.formatString("Test: {STRING} you are a {COMMA32}!", "Hello", 100);
+	t.is(actual, "Test: {STRING=Hello} you are a {COMMA32=100}!");
+});
+
+
+test("Format string ignores other tokens", t =>
+{
+	const mock = ContextMocker();
+
+	const actual = mock.formatString("{PUSH16} {BLACK} {OUTLINE} {HALF A TOKEN {COMMA1DP16}!", 999);
+	t.is(actual, "{PUSH16} {BLACK} {OUTLINE} {HALF A TOKEN {COMMA1DP16=999}!");
 });

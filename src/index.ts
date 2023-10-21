@@ -70,7 +70,11 @@ export interface Mock
 	 *  * `registerAction` maps to the `registeredActions` array.
 	 *  * `subscribe` maps to the `subscriptions` property.
 	 *  * `queryAction` and `executeAction` will trigger any actions in the `registeredActions` and `subscriptions` arrays.
+	 *  * `getIcon` always returns the length of the `iconName` string.
 	 *  * `getRandom` always returns `min` by default.
+	 *  * `formatString` does not replace tokens, but inserts the arguments into them.
+	 *    They may not be formatted according to the specific token.
+	 *    Example: `{INT32}` becomes `{INT32=100}` if the associated argument is 100.
 	 */
 	context: MockTemplate<ContextMock>;
 

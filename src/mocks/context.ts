@@ -108,6 +108,10 @@ export function ContextMocker(template?: Partial<ContextMock>): ContextMock
 		{
 			return TrackSegmentMocker({ type });
 		},
+		getIcon(iconName: IconName): number
+		{
+			return iconName.length;
+		},
 		// eslint-disable-next-line @typescript-eslint/ban-types
 		subscribe(hook: string, callback: Function): IDisposable
 		{
@@ -160,6 +164,12 @@ export function ContextMocker(template?: Partial<ContextMock>): ContextMock
 		getRandom(min: number): number
 		{
 			return min;
+		},
+		formatString(fmt: string, ...args: unknown[]): string
+		{
+			const regex = /{(?:COMMA(?:16|32|1DP16|2DP32)|CURRENCY(?:2DP)?|DURATION|INT32|LENGTH|MONTH(?:YEAR)?|STRING(?:ID)?|REALTIME|SPRITE|UINT16|VELOCITY)}/g;
+			let idx = 0;
+			return fmt.replace(regex, token => `${token.slice(0, -1)}=${args[idx++]}}`);
 		},
 
 		...template,
