@@ -1,6 +1,7 @@
 import { Mocker } from "../core/mocker";
 import * as ArrayHelper from "../utilities/array";
 import { Mutable } from "../utilities/mutable";
+import { noop } from "../utilities/noop";
 import { TrackSegmentMocker } from "./tracks/trackSegment";
 
 
@@ -91,6 +92,7 @@ export function ContextMocker(template?: Partial<ContextMock>): ContextMock
 		apiVersion: 0,
 		mode: "normal",
 		subscriptions: [],
+        captureImage: noop,
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		getObject(type: ObjectType, index: number): any
 		{
