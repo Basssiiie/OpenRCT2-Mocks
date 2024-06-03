@@ -16,7 +16,8 @@
 	"types": "dist/index.d.ts",
 	"exports": {
 		"require": "./dist/index.min.js",
-		"import": "./dist/index.min.mjs"
+		"import": "./dist/index.min.mjs",
+		"types": "./dist/index.d.ts"
 	},
 	"files": [
 		"dist/index*"
