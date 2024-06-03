@@ -2,7 +2,7 @@
 	"name": "openrct2-mocks",
 	"author": "Basssiiie",
 	"license": "MIT",
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"description": "Unit test mocks for OpenRCT2 plugins.",
 	"keywords": [
 		"openrct2",
